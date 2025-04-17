@@ -1,4 +1,4 @@
-# Code and Data for _"A serious flaw in the design of pLLM-based protein-protein interaction models."_
+# Code and Data for _"A flaw in using pre-trained pLLMs in protein-protein interaction inference models"_
 
 ## How To Use this Repository
 
