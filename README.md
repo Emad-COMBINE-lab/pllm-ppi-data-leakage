@@ -9,6 +9,12 @@ Please consult the [documentation](https://Emad-COMBINE-lab.github.io/pllm-ppi-d
 
 There are 16GiB of compressed data which is too large for Git to reasonably handle. Data files can be downloaded via the BitTorrent protocol. More information is available in the [data](data/README.md) folder.
 
+## Requirements and Dependencies
+
+Instructions for installation, as well as details on requirements and dependencies, are all available through the [online documentation](https://Emad-COMBINE-lab.github.io/pllm-ppi-data-leakage/).
+
+Python 3 is required to locally building the online documentation site. Package dependencies is available in the `requirements.txt` file in this folder. All code was tested on Linux (Debian-based Distrubtions).
+
 ## License
 
 ### Code
