@@ -10,6 +10,11 @@ The code, as well as the documentation, is divided into a few sections:
 |[**`experiments`**](experiments/index.md)|Code to conduct the experiments in the manuscript.|
 |[**`data`**](data/index.md)|Data used for the experiments in the manuscript.|
 
+## Installation & Requirements
+
+This code base contains many small experiments, as well as the `autofigures` programme, which each have their own requirements. All these code bases are written in Python v3. Specific instructions for installing the required dependencies is present in each folder.
+
+Install time for the various experiments in this repository vary greatly and depend on hardware (_e.g._, disk I/O), but typically will take less than 15 minutes for each code base.
 
 ## License
 
