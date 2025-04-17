@@ -1,0 +1,51 @@
+site_name: A flaw in using pre-trained pLLMs in protein-protein interaction inference models
+#site_url: https://mydomain.org/mysite
+theme:
+  name: material
+  features:
+    - navigation.tabs
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: blue
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        primary: blue
+        accent: orange
+        name: Switch to light mode
+nav:
+  - Home: index.md
+  - autofigures:
+      - Home: autofigures/index.md
+      - Installation: autofigures/installation.md
+      - Usage: autofigures/usage.md
+  - Experiments:
+      - Home: experiments/index.md
+      - encode_llm: experiments/encode_llm.md
+      - embedding_dbs: experiments/embedding_dbs.md
+      - speed_bench: experiments/speed_bench.md
+      - ppi_bench: experiments/ppi_bench.md
+      - kw_bench: experiments/kw_bench.md
+      - sars_bench: experiments/sars_bench.md
+      - mutation_bench: experiments/mutation_bench.md
+  - Data: data/index.md
+  - Definitions & Glossary: glossary.md
+plugins:
+  - search
+  - ezglossary
+markdown_extensions:
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details

@@ -1,5 +1,13 @@
 # Code and Data for _"A serious flaw in the design of pLLM-based protein-protein interaction models."_
 
+## How To Use this Repository
+
+Please consult the [documentation](https://Emad-COMBINE-lab.github.io/pllm-ppi-data-leakage/
+) for information on how to install dependencies, run experiments, and generate all figures in the manuscript.
+
+## Where's the Data?
+
+There are 16GiB of compressed data which is too large for Git to reasonably handle. Data files can be downloaded via the BitTorrent protocol. More information is available in the [data](data/README.md) folder.
 
 ## License
 
