@@ -1,0 +1,2122 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../installation/">
+      
+      
+        <link rel="next" href="../../experiments/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.5">
+    
+    
+      
+        <title>Usage - A flaw in using pre-trained pLLMs in protein-protein interaction inference models</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#usage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" class="md-header__button md-logo" aria-label="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            A flaw in using pre-trained pLLMs in protein-protein interaction inference models
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Usage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  autofigures
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../experiments/" class="md-tabs__link">
+          
+  
+  Experiments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../data/" class="md-tabs__link">
+        
+  
+    
+  
+  Data
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+    
+  
+  Definitions & Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" class="md-nav__button md-logo" aria-label="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    A flaw in using pre-trained pLLMs in protein-protein interaction inference models
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    autofigures
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            autofigures
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Usage
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#output-and-data-folders" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output and Data Folders
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get_scores" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_scores
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_scores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#speed" class="md-nav__link">
+    <span class="md-ellipsis">
+      speed
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="speed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strict_nonstrict" class="md-nav__link">
+    <span class="md-ellipsis">
+      strict_nonstrict
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="strict_nonstrict">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kw" class="md-nav__link">
+    <span class="md-ellipsis">
+      kw
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="kw">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concordance" class="md-nav__link">
+    <span class="md-ellipsis">
+      concordance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="concordance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#length_histogram" class="md-nav__link">
+    <span class="md-ellipsis">
+      length_histogram
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="length_histogram">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#length_heatmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      length_heatmap
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="length_heatmap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acc_by_length" class="md-nav__link">
+    <span class="md-ellipsis">
+      acc_by_length
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="acc_by_length">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sars_cov2" class="md-nav__link">
+    <span class="md-ellipsis">
+      sars_cov2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="sars_cov2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mutation" class="md-nav__link">
+    <span class="md-ellipsis">
+      mutation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mutation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Experiments
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Experiments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/encode_llm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    encode_llm
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/embedding_dbs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    embedding_dbs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/speed_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    speed_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/ppi_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ppi_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/kw_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kw_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/sars_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sars_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/mutation_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    mutation_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Definitions & Glossary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#output-and-data-folders" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output and Data Folders
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get_scores" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_scores
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_scores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#speed" class="md-nav__link">
+    <span class="md-ellipsis">
+      speed
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="speed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strict_nonstrict" class="md-nav__link">
+    <span class="md-ellipsis">
+      strict_nonstrict
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="strict_nonstrict">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kw" class="md-nav__link">
+    <span class="md-ellipsis">
+      kw
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="kw">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concordance" class="md-nav__link">
+    <span class="md-ellipsis">
+      concordance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="concordance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#length_histogram" class="md-nav__link">
+    <span class="md-ellipsis">
+      length_histogram
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="length_histogram">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#length_heatmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      length_heatmap
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="length_heatmap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acc_by_length" class="md-nav__link">
+    <span class="md-ellipsis">
+      acc_by_length
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="acc_by_length">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sars_cov2" class="md-nav__link">
+    <span class="md-ellipsis">
+      sars_cov2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="sars_cov2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mutation" class="md-nav__link">
+    <span class="md-ellipsis">
+      mutation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mutation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="usage">Usage</h1>
+<p>Figures are generated by calling sub-commands. These sub-commands are:</p>
+<table>
+<thead>
+<tr>
+<th>Sub-command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#get_scores">get_scores</a></td>
+<td>Infer and score pLLM-based PPI models. Pre-requisite for some commands.</td>
+</tr>
+<tr>
+<td><a href="#speed">speed</a></td>
+<td>Make figure 1a, which compares the speed and PPI classification performance of SoTA pLLMs and SqueezeProt.</td>
+</tr>
+<tr>
+<td><a href="#strict_nonstrict">strict_nonstrict</a></td>
+<td>Make figure 1c-d, comparing PPI classification performance of both strict and non-strict variants of SqueezeProt-SP.</td>
+</tr>
+<tr>
+<td><a href="#kw">kw</a></td>
+<td>Make figure 1e-f, which reports the performance of strict and non-strict variants of SqueezeProt-SP on a UniProt Keyword annotation task.</td>
+</tr>
+<tr>
+<td><a href="#concordance">concordance</a></td>
+<td>Make figure 1g-h, which reports the concordance between pLLM methods and SqueezeProt-SP variants.</td>
+</tr>
+<tr>
+<td><a href="#length_histogram">length_histogram</a></td>
+<td>Make figure 2a, which shows the distribution of protein lengths.</td>
+</tr>
+<tr>
+<td><a href="#length_heatmap">length_heatmap</a></td>
+<td>Make figure 2b, which shows the performance of pLLM-base PPIs as a function of the length of the proteins in the pair.</td>
+</tr>
+<tr>
+<td><a href="#acc_by_length">acc_by_length</a></td>
+<td>Make figure 2c, which shows the performance of pLLM-base PPIs as a function of the longest protein in the pair.</td>
+</tr>
+<tr>
+<td><a href="#sars_cov2">sars_cov2</a></td>
+<td>Make figure 2e, which reports AUROC curves of pLLM-based PPI methods tested on both Human PPIs and Human-SARS-CoV-2 PPIs.</td>
+</tr>
+<tr>
+<td><a href="#mutation">mutation</a></td>
+<td>Make figure 2f, which reports the change in binding affinity as a function of the change in interaction prediction in mutated proteins.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="output-and-data-folders">Output and Data Folders</h2>
+<p>Common among these sub-commands are two flags: <strong>output_folder</strong> and <strong>data_folder</strong>. The former is where the results of the sub-commands are saved, and the latter is where the data used to run the sub-commands is kept. These default to "out" and "data" in the root directory if not specified.</p>
+<h2 id="get_scores">get_scores</h2>
+<div class="highlight"><pre><span></span><code>NAME
+    autofigures get_scores
+
+SYNOPSIS
+    autofigures get_scores &lt;flags&gt;
+
+FLAGS
+    -o, --output_folder=OUTPUT_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -d, --data_folder=DATA_FOLDER
+        Type: Optional[Union]
+        Default: None
+</code></pre></div>
+<h3 id="description">Description</h3>
+<p>The get_scores command:</p>
+<ol>
+<li>Loads already-trained pLLM-based PPI models.</li>
+<li>Infer interaction probabilities of the C3 PPI testing dataset using the loaded PPI models.</li>
+<li>Score the inferred probabilities using <a href="https://en.wikipedia.org/wiki/Phi_coefficient">MCC</a> and <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">AUROC</a>.</li>
+</ol>
+<p>This command does not generate a figure, but running it a pre-requisite for other commands.</p>
+<p>The checkpoints for the pLLM-based PPI models are stored in the data folder (<code>data/chkpts</code>), and were generated by the ppi_bench experiment.</p>
+<p>get_scores also needs pre-computed embeddings for <a class="mkdocs-ezglossary-link"
+    id="a7359539c27837c8906ab212af07e0a8"
+    title=""
+    name="term:ESM"
+    href="../../glossary/#ecdd2ea55eff55cfa44c063b94b70fa5">ESM</a>, <a class="mkdocs-ezglossary-link"
+    id="e61e4281785870f7178232642792545f"
+    title=""
+    name="term:ProtBERT"
+    href="../../glossary/#ff7c909d4d09ccb9aafbba77a9f9b51f">ProtBERT</a>, <a class="mkdocs-ezglossary-link"
+    id="c7f1ada6f7bab4ad2d1a28e62e4fc382"
+    title=""
+    name="term:ProtT5"
+    href="../../glossary/#b5264db575f2ffde52db16f45759e16f">ProtT5</a>, <a class="mkdocs-ezglossary-link"
+    id="b15952cf6f01367f42061bef3cfc1663"
+    title=""
+    name="term:ProSE"
+    href="../../glossary/#568a531ebcf98c28e9ed5384d069f668">ProSE</a>, <a class="mkdocs-ezglossary-link"
+    id="5361e29c6576c68a65cdd85bf90e6548"
+    title=""
+    name="term:ProteinBERT"
+    href="../../glossary/#e04f334bb55df9da76c62e85593241ef">ProteinBERT</a>, <a class="mkdocs-ezglossary-link"
+    id="9344ca2654138ea7c7ad6fba6cbcdb4f"
+    title=""
+    name="term:SqueezeProt-SP (Strict)"
+    href="../../glossary/#1a6429cc375e97777444d929e4f70fe0">SqueezeProt-SP (Strict)</a>, <a class="mkdocs-ezglossary-link"
+    id="584edec030f8760efd4c6ad493bde0c0"
+    title=""
+    name="term:SqueezeProt-SP (Non-strict)"
+    href="../../glossary/#dad46adba15c3f04390dc2e4565c081b">SqueezeProt-SP (Non-strict)</a>, <a class="mkdocs-ezglossary-link"
+    id="d1da40ed80b68065d3b197976fc3e571"
+    title=""
+    name="term:SqueezeProt-U50"
+    href="../../glossary/#86951eb003f13e08fc3ca3a1d2959c48">SqueezeProt-U50</a>.</p>
+<p>The data used for this is from our previous manuscript <em>"<a href="https://doi.org/10.1093/bib/bbae405">INTREPPPID—an orthologue-informed quintuplet network for cross-species prediction of protein–protein interaction</a>"</em>. They are pairs of Human interactions from STRING that conform to <a href="https://doi.org/10.1038/nmeth.2259">Park &amp; Marcotte's C3 criteria</a>. We use the 8675309 seed for this study (extra points if you know where the seed is from).</p>
+<h3 id="flags">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Long Flag</th>
+<th>Short Flag</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--output_folder</td>
+<td>-o</td>
+<td>None</td>
+<td>Location of the <a href="output-and-data-folders">output folder</a>.</td>
+</tr>
+<tr>
+<td>--data_folder</td>
+<td>-d</td>
+<td>None</td>
+<td>Location of the <a href="output-and-data-folders">data folders</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="speed">speed</h2>
+<div class="highlight"><pre><span></span><code>NAME
+    __main__.py speed
+
+SYNOPSIS
+    __main__.py speed &lt;flags&gt;
+
+FLAGS
+    -o, --output_folder=OUTPUT_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -d, --data_folder=DATA_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -y, --y_metric=Y_METRIC
+        Type: str
+        Default: &#39;mcc&#39;
+</code></pre></div>
+<h3 id="description_1">Description</h3>
+<p>Make figure 1a, which compares the speed and PPI classification performance of SoTA pLLMs and SqueezeProt.</p>
+<p>This command will save the plot to disk as <code>figures/speed.sv</code> in the output directory.</p>
+<h3 id="flags_1">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Long Flag</th>
+<th>Short Flag</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--output_folder</td>
+<td>-o</td>
+<td>None</td>
+<td>Location of the <a href="output-and-data-folders">output folder</a>.</td>
+</tr>
+<tr>
+<td>--data_folder</td>
+<td>-d</td>
+<td>None</td>
+<td>Location of the <a href="output-and-data-folders">data folders</a>.</td>
+</tr>
+<tr>
+<td>--y_metric</td>
+<td>-y</td>
+<td>"mcc"</td>
+<td>What PPI classification metric should be reported on the y-axis.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="strict_nonstrict">strict_nonstrict</h2>
+<div class="highlight"><pre><span></span><code>NAME
+    __main__.py strict_nonstrict
+
+SYNOPSIS
+    __main__.py strict_nonstrict &lt;flags&gt;
+
+FLAGS
+    -o, --output_folder=OUTPUT_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -d, --data_folder=DATA_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -a, --add_markers=ADD_MARKERS
+        Type: bool
+        Default: True
+    -f, --first_metric=FIRST_METRIC
+        Type: str
+        Default: &#39;auroc&#39;
+    -s, --second_metric=SECOND_METRIC
+        Type: str
+        Default: &#39;mcc&#39;
+</code></pre></div>
+<h3 id="description_2">Description</h3>
+<p>The strict_nonstrict command creates the Fig. 1c-d from the manuscript, which compares the performance of strict and non-strict variants of SqueezeProt-SP.</p>
+<p>Once it has run, it will save the plot as <code>figure/strict_nonstrict.svg</code> in the output directory.</p>
+<h3 id="flags_2">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Long Flag</th>
+<th>Short Flag</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--output_folder</td>
+<td>-o</td>
+<td>None</td>
+<td>Location of the <a href="output-and-data-folders">output folder</a>.</td>
+</tr>
+<tr>
+<td>--data_folder</td>
+<td>-d</td>
+<td>None</td>
+<td>Location of the <a href="output-and-data-folders">data folders</a>.</td>
+</tr>
+<tr>
+<td>--add_markers</td>
+<td>-a</td>
+<td>True</td>
+<td>Whether to add markers to the plot indicating replicate performances. Otherwise, whiskers are plotted to show standard deviation.</td>
+</tr>
+<tr>
+<td>--first_metric</td>
+<td>-f</td>
+<td>"auroc"</td>
+<td>Measure performance using which metric in the left panel. Must be one of "mcc", "auroc", "ap", or "f1".</td>
+</tr>
+<tr>
+<td>--second_metric</td>
+<td>-s</td>
+<td>"mcc"</td>
+<td>Measure performance using which metric in the left panel. Must be one of "mcc", "auroc", "ap", or "f1".</td>
+</tr>
+</tbody>
+</table>
+<h2 id="kw">kw</h2>
+<div class="highlight"><pre><span></span><code>NAME
+    autofigures kw
+
+SYNOPSIS
+    autofigures kw &lt;flags&gt;
+
+FLAGS
+    -o, --output_folder=OUTPUT_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -d, --data_folder=DATA_FOLDER
+        Type: Optional[Union]
+        Default: None
+</code></pre></div>
+<h3 id="description_3">Description</h3>
+<p>Make figure 1e-f, which reports the performance of strict and non-strict variants of SqueezeProt-SP on a UniProt Keyword annotation task.</p>
+<p>Once it has run, it will save the plot as <code>figure/kw.svg</code> in the output directory.</p>
+<h3 id="flags_3">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Long Flag</th>
+<th>Short Flag</th>
+<th>Defaults</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--output_folder</td>
+<td>-o</td>
+<td>None</td>
+<td>Location of the <a href="output-and-data-folders">output folder</a>.</td>
+</tr>
+<tr>
+<td>--data_folder</td>
+<td>-d</td>
+<td>None</td>
+<td>Location of the <a href="output-and-data-folders">data folders</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="concordance">concordance</h2>
+<div class="highlight"><pre><span></span><code>NAME
+    autofigures concordance
+
+SYNOPSIS
+    autofigures concordance &lt;flags&gt;
+
+FLAGS
+    -o, --output_folder=OUTPUT_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -d, --data_folder=DATA_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -c, --cohen_kappa=COHEN_KAPPA
+        Type: bool
+        Default: False
+</code></pre></div>
+<h3 id="description_4">Description</h3>
+<p>Make figure 1g-h, which reports the concordance between pLLM methods and SqueezeProt-SP variants.</p>
+<p>Once it has run, it will save the plot as <code>figure/concordance.svg</code> in the output directory.</p>
+<h3 id="flags_4">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Long Flag</th>
+<th>Short Flag</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--output_folder</td>
+<td>-o</td>
+<td>None</td>
+<td>Location of the <a href="output-and-data-folders">output folder</a>.</td>
+</tr>
+<tr>
+<td>--data_folder</td>
+<td>-d</td>
+<td>None</td>
+<td>Location of the <a href="output-and-data-fold">data folders</a></td>
+</tr>
+<tr>
+<td>--cohen_kappa</td>
+<td>-c</td>
+<td>False</td>
+<td>Display Cohen's Kappa. If False, shows skill-normalized concordance.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="length_histogram">length_histogram</h2>
+<div class="highlight"><pre><span></span><code>NAME
+    autofigures length_histogram
+
+SYNOPSIS
+    autofigures length_histogram &lt;flags&gt;
+
+FLAGS
+    -o, --output_folder=OUTPUT_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -d, --data_folder=DATA_FOLDER
+        Type: Optional[Union]
+        Default: None
+</code></pre></div>
+<h3 id="description_5">Description</h3>
+<p>Make figure 2a, which shows the distribution of protein lengths.</p>
+<p>Once it has run, it will save the plot as <code>figure/length_histogram.svg</code> in the output directory.</p>
+<h3 id="flags_5">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Long Flag</th>
+<th>Short Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--output_folder</td>
+<td>-o</td>
+<td>Location of the <a href="output-and-data-folders">output folder</a>.</td>
+</tr>
+<tr>
+<td>--data_folder</td>
+<td>-d</td>
+<td>Location of the <a href="output-and-data-folders">data folders</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="length_heatmap">length_heatmap</h2>
+<div class="highlight"><pre><span></span><code>NAME
+    autofigures length_heatmap
+
+SYNOPSIS
+    autofigures length_heatmap &lt;flags&gt;
+
+FLAGS
+    -o, --output_folder=OUTPUT_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -d, --data_folder=DATA_FOLDER
+        Type: Optional[Union]
+        Default: None
+</code></pre></div>
+<h3 id="description_6">Description</h3>
+<p>Make figure 2a, which shows the distribution of protein lengths.</p>
+<p>Once it has run, it will save the plot the following plots in the output directory:</p>
+<ul>
+<li><code>figures/length_heatmap_dscript.svg</code></li>
+<li><code>figures/length_heatmap_esm.svg</code></li>
+<li><code>figures/length_heatmap_intrepppid.svg</code></li>
+<li><code>figures/length_heatmap_pipr.svg</code></li>
+<li><code>figures/length_heatmap_prose.svg</code></li>
+<li><code>figures/length_heatmap_proteinbert.svg</code></li>
+<li><code>figures/length_heatmap_prottrans_bert.svg</code></li>
+<li><code>figures/length_heatmap_prottrans_t5.svg</code></li>
+<li><code>figures/length_heatmap_rapppid.svg</code></li>
+<li><code>figures/length_heatmap_richoux.svg</code></li>
+<li><code>figures/length_heatmap_sizes.svg</code></li>
+<li><code>figures/length_heatmap_squeezeprot_sp_nonstrict.svg</code></li>
+<li><code>figures/length_heatmap_squeezeprot_sp_strict.svg</code></li>
+<li><code>figures/length_heatmap_squeezeprot_u50.svg</code></li>
+</ul>
+<h3 id="flags_6">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Long Flag</th>
+<th>Short Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--output_folder</td>
+<td>-o</td>
+<td>Location of the <a href="output-and-data-folders">output folder</a>.</td>
+</tr>
+<tr>
+<td>--data_folder</td>
+<td>-d</td>
+<td>Location of the <a href="output-and-data-folders">data folders</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="acc_by_length">acc_by_length</h2>
+<div class="highlight"><pre><span></span><code>NAME
+    autofigures acc_by_length
+
+SYNOPSIS
+    autofigures acc_by_length &lt;flags&gt;
+
+FLAGS
+    -o, --output_folder=OUTPUT_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -d, --data_folder=DATA_FOLDER
+        Type: Optional[Union]
+        Default: None
+</code></pre></div>
+<h3 id="description_7">Description</h3>
+<p>Make figure 2c, which shows the performance of pLLM-base PPIs as a function of the longest protein in the pair.</p>
+<p>Once it has run, it will save the plot as <code>figure/acc_by_length.svg</code> in the output directory.</p>
+<h3 id="flags_7">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Long Flag</th>
+<th>Short Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--output_folder</td>
+<td>-o</td>
+<td>Location of the <a href="output-and-data-folders">output folder</a>.</td>
+</tr>
+<tr>
+<td>--data_folder</td>
+<td>-d</td>
+<td>Location of the <a href="output-and-data-folders">data folders</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sars_cov2">sars_cov2</h2>
+<div class="highlight"><pre><span></span><code>NAME
+    autofigures sars_cov2
+
+SYNOPSIS
+    autofigures sars_cov2 &lt;flags&gt;
+
+FLAGS
+    -o, --output_folder=OUTPUT_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -d, --data_folder=DATA_FOLDER
+        Type: Optional[Union]
+        Default: None
+</code></pre></div>
+<h3 id="description_8">Description</h3>
+<p>Make figure 2e, which reports AUROC curves of pLLM-based PPI methods tested on both Human PPIs and Human-SARS-CoV-2 PPIs.</p>
+<p>Once it has run, it will save the plot the following plots in the output directory:</p>
+<ul>
+<li><code>figures/sars_cov2_breakdown.svg</code></li>
+<li><code>figures/sars_cov2_roc_highlight.svg</code></li>
+<li><code>figures/sars_cov2_roc.svg</code></li>
+</ul>
+<h3 id="flags_8">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Long Flag</th>
+<th>Short Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--output_folder</td>
+<td>-o</td>
+<td>Location of the <a href="output-and-data-folders">output folder</a>.</td>
+</tr>
+<tr>
+<td>--data_folder</td>
+<td>-d</td>
+<td>Location of the <a href="output-and-data-folders">data folders</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mutation">mutation</h2>
+<div class="highlight"><pre><span></span><code>NAME
+    autofigures mutation
+
+SYNOPSIS
+    autofigures mutation &lt;flags&gt;
+
+FLAGS
+    -o, --output_folder=OUTPUT_FOLDER
+        Type: Optional[Union]
+        Default: None
+    -d, --data_folder=DATA_FOLDER
+        Type: Optional[Union]
+        Default: None
+</code></pre></div>
+<h3 id="description_9">Description</h3>
+<p>Make figure 2f, which reports the change in binding affinity as a function of the change in interaction prediction in mutated proteins.</p>
+<p>Once it has run, it will save the plot the following plots in the output directory:</p>
+<ul>
+<li><code>figures/mutation_esm.png</code></li>
+<li><code>figures/mutation_prose.png</code></li>
+<li><code>figures/mutation_proteinbert.png</code></li>
+<li><code>figures/mutation_prottrans_bert.png</code></li>
+<li><code>figures/mutation_prottrans_t5.png</code></li>
+<li><code>figures/mutation_squeezeprot_sp_nonstrict.png</code></li>
+<li><code>figures/mutation_squeezeprot_sp_strict.png</code></li>
+<li><code>figures/mutation_squeezeprot_u50.png</code></li>
+</ul>
+<h3 id="flags_9">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Long Flag</th>
+<th>Short Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--output_folder</td>
+<td>-o</td>
+<td>Location of the <a href="output-and-data-folders">output folder</a>.</td>
+</tr>
+<tr>
+<td>--data_folder</td>
+<td>-d</td>
+<td>Location of the <a href="output-and-data-folders">data folders</a>.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+    
+  </body>
+</html>

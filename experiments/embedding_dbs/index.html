@@ -1,0 +1,1349 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../encode_llm/">
+      
+      
+        <link rel="next" href="../speed_bench/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.5">
+    
+    
+      
+        <title>embedding_dbs - A flaw in using pre-trained pLLMs in protein-protein interaction inference models</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#embedding_dbs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" class="md-header__button md-logo" aria-label="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            A flaw in using pre-trained pLLMs in protein-protein interaction inference models
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              embedding_dbs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../autofigures/" class="md-tabs__link">
+          
+  
+  autofigures
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  Experiments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../data/" class="md-tabs__link">
+        
+  
+    
+  
+  Data
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+    
+  
+  Definitions & Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" class="md-nav__button md-logo" aria-label="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    A flaw in using pre-trained pLLMs in protein-protein interaction inference models
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    autofigures
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            autofigures
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../autofigures/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../autofigures/installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../autofigures/usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Experiments
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Experiments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encode_llm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    encode_llm
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    embedding_dbs
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    embedding_dbs
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#embed_batchpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      embed_batch.py
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="embed_batch.py">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arguments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pllm" class="md-nav__link">
+    <span class="md-ellipsis">
+      PLLM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      INPUT_PATH
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#max_batch_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      MAX_BATCH_SIZE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#device" class="md-nav__link">
+    <span class="md-ellipsis">
+      DEVICE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output" class="md-nav__link">
+    <span class="md-ellipsis">
+      OUTPUT
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rapppid" class="md-nav__link">
+    <span class="md-ellipsis">
+      RAPPPID
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proteinbert" class="md-nav__link">
+    <span class="md-ellipsis">
+      ProteinBERT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prose" class="md-nav__link">
+    <span class="md-ellipsis">
+      ProSE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all-other-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      All other models
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../speed_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    speed_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ppi_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ppi_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kw_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kw_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sars_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sars_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mutation_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    mutation_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Definitions & Glossary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#embed_batchpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      embed_batch.py
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="embed_batch.py">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arguments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pllm" class="md-nav__link">
+    <span class="md-ellipsis">
+      PLLM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      INPUT_PATH
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#max_batch_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      MAX_BATCH_SIZE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#device" class="md-nav__link">
+    <span class="md-ellipsis">
+      DEVICE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output" class="md-nav__link">
+    <span class="md-ellipsis">
+      OUTPUT
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rapppid" class="md-nav__link">
+    <span class="md-ellipsis">
+      RAPPPID
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proteinbert" class="md-nav__link">
+    <span class="md-ellipsis">
+      ProteinBERT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prose" class="md-nav__link">
+    <span class="md-ellipsis">
+      ProSE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all-other-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      All other models
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="embedding_dbs">embedding_dbs</h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This section involves juggling conflicting requirements across a large number of protein embedding models. If you want to avoid this, you can just skip this step as embeddings have been <a href="/data/#embeddings">pre-computed for you</a>.</p>
+</div>
+<p>This folder holds all the tools required to build databases of embeddings generated by a number of methods. These databases are used by many of the experiments conducted in the manuscript.</p>
+<h2 id="embed_batchpy">embed_batch.py</h2>
+<p>This folder contains the <code>embed_batch.py</code> python script, which embeds the sequences of the proteins found in our downstream PPI dataset.</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>embed_batch.py<span class="w"> </span>PLLM<span class="w"> </span>INPUT_PATH<span class="w"> </span>MAX_BATCH_SIZE<span class="w"> </span>DEVICE<span class="w"> </span>OUTPUT
+</code></pre></div>
+<h3 id="arguments">Arguments</h3>
+<h4 id="pllm">PLLM</h4>
+<p>Specify the pLLM to use to embed protein sequences. The valid options are:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>pLLM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>squeezeprot_sp_nonstrict</code></td>
+<td><a class="mkdocs-ezglossary-link"
+    id="8ddbfeb54bd8c70c0320f2709efc9b22"
+    title=""
+    name="term:SqueezeProt-SP (Non-strict)"
+    href="../../glossary/#dad46adba15c3f04390dc2e4565c081b">SqueezeProt-SP (Non-strict)</a></td>
+</tr>
+<tr>
+<td><code>squeezeprot_sp_strict</code></td>
+<td><a class="mkdocs-ezglossary-link"
+    id="6a509d36c7535122046a2fbbe9524dce"
+    title=""
+    name="term:SqueezeProt-SP (Strict)"
+    href="../../glossary/#1a6429cc375e97777444d929e4f70fe0">SqueezeProt-SP (Strict)</a></td>
+</tr>
+<tr>
+<td><code>squeezeprot_u50</code></td>
+<td><a class="mkdocs-ezglossary-link"
+    id="05c65da403d7abdabfd984d77a5b68c9"
+    title=""
+    name="term:SqueezeProt-U50"
+    href="../../glossary/#86951eb003f13e08fc3ca3a1d2959c48">SqueezeProt-U50</a></td>
+</tr>
+<tr>
+<td><code>prottrans_bert</code></td>
+<td><a class="mkdocs-ezglossary-link"
+    id="c2d5e08e50429f7c3914d5291b5d2e24"
+    title=""
+    name="term:ProtBERT"
+    href="../../glossary/#ff7c909d4d09ccb9aafbba77a9f9b51f">ProtBERT</a></td>
+</tr>
+<tr>
+<td><code>prottrans_t5</code></td>
+<td><a class="mkdocs-ezglossary-link"
+    id="d8b22c8694357e38dc6c173e273b37e2"
+    title=""
+    name="term:ProtT5"
+    href="../../glossary/#b5264db575f2ffde52db16f45759e16f">ProtT5</a></td>
+</tr>
+<tr>
+<td><code>proteinbert</code></td>
+<td><a class="mkdocs-ezglossary-link"
+    id="fb9168a49ae6c2838262471e320a947a"
+    title=""
+    name="term:ProteinBERT"
+    href="../../glossary/#e04f334bb55df9da76c62e85593241ef">ProteinBERT</a></td>
+</tr>
+<tr>
+<td><code>prose</code></td>
+<td><a class="mkdocs-ezglossary-link"
+    id="f4bd99e1ca3981a277ca6cd77c3f1140"
+    title=""
+    name="term:ProSE"
+    href="../../glossary/#568a531ebcf98c28e9ed5384d069f668">ProSE</a></td>
+</tr>
+<tr>
+<td><code>esm</code></td>
+<td><a class="mkdocs-ezglossary-link"
+    id="50f350042ee758d9dbfe83ac834203ba"
+    title=""
+    name="term:ESM"
+    href="../../glossary/#ecdd2ea55eff55cfa44c063b94b70fa5">ESM</a></td>
+</tr>
+<tr>
+<td><code>rapppid</code></td>
+<td><a class="mkdocs-ezglossary-link"
+    id="3357f962d076553741173662ae74bd62"
+    title=""
+    name="term:RAPPPID"
+    href="../../glossary/#25dbf13697b1c8f7e89c1901429d7e2c">RAPPPID</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="input_path">INPUT_PATH</h4>
+<p>This is the file path to the protein sequences. Valid file formats are:</p>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Required Extension</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://en.wikipedia.org/wiki/FASTA_format">FASTA</a></td>
+<td><code>.fasta</code></td>
+</tr>
+<tr>
+<td><a href="https://en.wikipedia.org/wiki/Gzip">Gzip</a>'d <a href="https://en.wikipedia.org/wiki/FASTA_format">FASTA</a></td>
+<td><code>.fasta.gz</code></td>
+</tr>
+<tr>
+<td><a href="https://emad-combine-lab.github.io/intrepppid/data.html">RAPPPID PPI Dataset</a></td>
+<td><code>.h5</code></td>
+</tr>
+<tr>
+<td><a href="https://en.wikipedia.org/wiki/Comma-separated_values">CSV</a></td>
+<td><code>.csv</code></td>
+</tr>
+</tbody>
+</table>
+<p>The CSV format must contain two columns, with the headers "accession" and "sequence", which must contain a protein ID (usually UniProt accession) and the amino acid sequence, respectively. Ultimately, it should look something like:</p>
+<div class="highlight"><pre><span></span><code>accession,sequence
+P05067,MLPGLALLLLAAWTARALEVPTDGNAGLLAEPQIAMFCGR...
+Q29537,MEESQSELNIDPPLSQETFSELWNLLPENNVLSSELCPAV...
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To encode the sequences from the PPI dataset used in the manuscript, just point this to <a href="/data/"><code>../../data/ppi/rapppid_[common_string_9606.protein.links.detailed.v12.0_upkb.csv]_Mz70T9t-4Y-i6jWD9sEtcjOr0X8=.h5</code></a>.</p>
+</div>
+<h4 id="max_batch_size">MAX_BATCH_SIZE</h4>
+<p>The size of the batches of sequences to embed at a time. This will increase RAM/VRAM usage.</p>
+<h4 id="device">DEVICE</h4>
+<p>Either "cpu" or "cuda" depending on whether sequences are to be embedded on the CPU or using a GPU. Defaults to "cpu".</p>
+<h4 id="output">OUTPUT</h4>
+<p>Path to save the embeddings database to. The default paths change with the pLLMs you specify:</p>
+<table>
+<thead>
+<tr>
+<th>pLLM</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="mkdocs-ezglossary-link"
+    id="7bbbbd0f470c22d3774533fd06c347cf"
+    title=""
+    name="term:SqueezeProt-SP (Non-strict)"
+    href="../../glossary/#dad46adba15c3f04390dc2e4565c081b">SqueezeProt-SP (Non-strict)</a></td>
+<td><code>../../data/embeddings/squeezeprot_sp_nonstrict.lmdb</code></td>
+</tr>
+<tr>
+<td><a class="mkdocs-ezglossary-link"
+    id="bf84c159d8328676fc0e3c804631eb34"
+    title=""
+    name="term:SqueezeProt-SP (Strict)"
+    href="../../glossary/#1a6429cc375e97777444d929e4f70fe0">SqueezeProt-SP (Strict)</a></td>
+<td><code>../../data/embeddings/squeezeprot_sp_strict.lmdb</code></td>
+</tr>
+<tr>
+<td><a class="mkdocs-ezglossary-link"
+    id="b7b0856155578f40d695a98f06b84fe5"
+    title=""
+    name="term:SqueezeProt-U50"
+    href="../../glossary/#86951eb003f13e08fc3ca3a1d2959c48">SqueezeProt-U50</a></td>
+<td><code>../../data/embeddings/squeezeprot_u50.lmdb</code></td>
+</tr>
+<tr>
+<td><a class="mkdocs-ezglossary-link"
+    id="df7130f86d608994bfe6a0bf1202b0e3"
+    title=""
+    name="term:ProtBERT"
+    href="../../glossary/#ff7c909d4d09ccb9aafbba77a9f9b51f">ProtBERT</a></td>
+<td><code>../../data/embeddings/prottrans_bert.lmdb</code></td>
+</tr>
+<tr>
+<td><a class="mkdocs-ezglossary-link"
+    id="b85a9f0e0c1ef486ae0de54cb9646a48"
+    title=""
+    name="term:ProtT5"
+    href="../../glossary/#b5264db575f2ffde52db16f45759e16f">ProtT5</a></td>
+<td><code>../../data/embeddings/prottrans_t5.lmdb</code></td>
+</tr>
+<tr>
+<td><a class="mkdocs-ezglossary-link"
+    id="cf8b512e2e1a9ba402b3be49e490732d"
+    title=""
+    name="term:ProteinBERT"
+    href="../../glossary/#e04f334bb55df9da76c62e85593241ef">ProteinBERT</a></td>
+<td><code>../../data/embeddings/proteinbert.lmdb</code></td>
+</tr>
+<tr>
+<td><a class="mkdocs-ezglossary-link"
+    id="12d15804b5105edca3cee8c6c35fa83d"
+    title=""
+    name="term:ProSE"
+    href="../../glossary/#568a531ebcf98c28e9ed5384d069f668">ProSE</a></td>
+<td><code>../../data/embeddings/prose.lmdb</code></td>
+</tr>
+<tr>
+<td><a class="mkdocs-ezglossary-link"
+    id="1260176079637d0aa5daf518ef56bf73"
+    title=""
+    name="term:ESM"
+    href="../../glossary/#ecdd2ea55eff55cfa44c063b94b70fa5">ESM</a></td>
+<td><code>../../data/embeddings/esm.lmdb</code></td>
+</tr>
+<tr>
+<td><a class="mkdocs-ezglossary-link"
+    id="d1f83b55d945492a49bb6e6133b85860"
+    title=""
+    name="term:RAPPPID"
+    href="../../glossary/#25dbf13697b1c8f7e89c1901429d7e2c">RAPPPID</a></td>
+<td><code>../../data/embeddings/rapppid.lmdb</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="requirements">Requirements</h2>
+<p>Because some models have conflicting dependencies, we need to create different environments for different models. You will then need to activate/deactivate those environments when running <code>embed_batch.py</code> depending on the model you are using.</p>
+<h3 id="rapppid">RAPPPID</h3>
+<p>RAPPPID works well with Python 3.8, and the dependencies are in the file <code>requirements_rapppid.txt</code>.</p>
+<p>More information can be found on the <a href="https://github.com/jszym/rapppid">RAPPPID GitHub repository</a>.</p>
+<h3 id="proteinbert">ProteinBERT</h3>
+<p>ProteinBERT works well with Python 3.6, and the dependencies are in the file <code>requirements_proteinbert.txt</code>. You must then install ProteinBERT proper by cloning the repository and installing thusly:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nadavbra/protein_bert
+<span class="nb">cd</span><span class="w"> </span>protein_bert
+git<span class="w"> </span>submodule<span class="w"> </span>init
+git<span class="w"> </span>submodule<span class="w"> </span>update
+python<span class="w"> </span>setup.py<span class="w"> </span>install
+</code></pre></div>
+<p>More information can be found on the <a href="https://github.com/nadavbra/protein_bert">ProteinBERT GitHub repository</a>.</p>
+<h3 id="prose">ProSE</h3>
+<p>ProSE works well with Python 3.7, and the dependencies are in the file <code>requirements_prose.txt</code>.</p>
+<h3 id="all-other-models">All other models</h3>
+<p>For all other models, we recommend Python 3.11. The dependencies are in the file <code>requirements.txt</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+    
+  </body>
+</html>

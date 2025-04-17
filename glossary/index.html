@@ -1,0 +1,1551 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../data/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.5">
+    
+    
+      
+        <title>Definitions & Glossary - A flaw in using pre-trained pLLMs in protein-protein interaction inference models</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#definitions-glossary" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" class="md-header__button md-logo" aria-label="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            A flaw in using pre-trained pLLMs in protein-protein interaction inference models
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Definitions & Glossary
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../autofigures/" class="md-tabs__link">
+          
+  
+  autofigures
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../experiments/" class="md-tabs__link">
+          
+  
+  Experiments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../data/" class="md-tabs__link">
+        
+  
+    
+  
+  Data
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  Definitions & Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" class="md-nav__button md-logo" aria-label="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    A flaw in using pre-trained pLLMs in protein-protein interaction inference models
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    autofigures
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            autofigures
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autofigures/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autofigures/installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autofigures/usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Experiments
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Experiments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../experiments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../experiments/encode_llm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    encode_llm
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../experiments/embedding_dbs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    embedding_dbs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../experiments/speed_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    speed_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../experiments/ppi_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ppi_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../experiments/kw_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kw_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../experiments/sars_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sars_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../experiments/mutation_bench/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    mutation_bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Definitions & Glossary
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Definitions & Glossary
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Definitions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Definitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pllms" class="md-nav__link">
+    <span class="md-ellipsis">
+      pLLMs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-pllm-based-ppi-inference-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-pLLM-based PPI Inference Methods
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glossary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Glossary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Definitions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Definitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pllms" class="md-nav__link">
+    <span class="md-ellipsis">
+      pLLMs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-pllm-based-ppi-inference-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-pLLM-based PPI Inference Methods
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glossary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Glossary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="definitions-glossary">Definitions &amp; Glossary</h1>
+<h2 id="definitions">Definitions</h2>
+<h3 id="pllms">pLLMs</h3>
+<dl>
+<dt>
+	<a id="ecdd2ea55eff55cfa44c063b94b70fa5">ESM</a> 
+</dt>
+<dd>Evolutionary Scale Modeling (ESM) is a protein large language model
+released by Meta and described in <a href="https://www.biorxiv.org/content/10.1101/2022.12.21.521521v1">Verkuil <em>et al.</em></a>. We use the V2 650M weights released by Meta and retrieved by the PyTorch Hub. It is referred to as <code>esm</code> by the code for this manuscript.</dd>
+
+<dt>
+	<a id="ff7c909d4d09ccb9aafbba77a9f9b51f">ProtBERT</a> 
+</dt>
+<dd>ProtBERT is one of the many protein large language models described
+by <a href="https://doi.org/10.1109/tpami.2021.3095381">Elnaggar <em>et al.</em></a>, and is based on BERT. Weights are retrieved from the HuggingFace repository <a href="https://huggingface.co/Rostlab/prot_bert">Rostlab/prot_bert</a>. It is referred to as <code>prottrans_bert</code> by the code for the manuscript.</dd>
+
+<dt>
+	<a id="b5264db575f2ffde52db16f45759e16f">ProtT5</a> 
+</dt>
+<dd>ProtBERT is one of the many protein large language models described
+by <a href="https://doi.org/10.1109/tpami.2021.3095381">Elnaggar <em>et al.</em></a>, and is based on BERT. Weights are retrieved from the HuggingFace repository <a href="https://huggingface.co/Rostlab/prot_t5_xl_half_uniref50-enc">Rostlab/prot_t5_xl_half_uniref50-enc</a>. It is referred to as <code>prottrans_t5</code> by the code for the manuscript.</dd>
+
+<dt>
+	<a id="568a531ebcf98c28e9ed5384d069f668">ProSE</a> 
+</dt>
+<dd>ProSE is a protein large language models described
+by <a href="https://doi.org/10.1016/j.cels.2021.05.017">Bepler <em>et al.</em></a>, and is based on an recurrent neural network architecture. Weights are retrieved from the <a href="https://github.com/tbepler/prose">GitHub repository</a>. It is referred to as <code>prose</code> by the code for the manuscript.</dd>
+
+<dt>
+	<a id="e04f334bb55df9da76c62e85593241ef">ProteinBERT</a> 
+</dt>
+<dd>ProteinBERT is a protein large language models described
+by <a href="https://doi.org/10.1093/bioinformatics/btac020">Brandes <em>et al.</em></a>, and is based on the BERT architecture. It uses an additional Gene Ontology (GO) term annotation prediction task. Weights and code were retrieved from the <a href="https://github.com/nadavbra/protein_bert">GitHub repository</a>. It is referred to as <code>proteinbert</code> by the code for the manuscript.</dd>
+
+<dt>
+	<a id="1a6429cc375e97777444d929e4f70fe0">SqueezeProt-SP (Strict)</a> 
+</dt>
+<dd>SqueezeProt-SP (Strict) is a novel protein large language model introduced in this manuscript. It is trained on a strict SWISS-PROT dataset which excludes proteins from the downstream PPI testing dataset. See the manuscript for more details. It is referred to as <code>squeezeprot_sp_strict</code> by the code for the manuscript.</dd>
+
+<dt>
+	<a id="dad46adba15c3f04390dc2e4565c081b">SqueezeProt-SP (Non-strict)</a> 
+</dt>
+<dd>SqueezeProt-SP (Non-strict) is a novel protein large language model introduced in this manuscript. It is trained on a non-strict SWISS-PROT dataset which includes proteins from the downstream PPI testing dataset. See the manuscript for more details. It is referred to as <code>squeezeprot_sp_nonstrict</code> by the code for the manuscript.</dd>
+
+<dt>
+	<a id="86951eb003f13e08fc3ca3a1d2959c48">SqueezeProt-U50</a> 
+</dt>
+<dd>SqueezeProt-U50 is a novel protein large language model introduced in this manuscript. It is trained on a non-strict UniRef50 dataset which includes proteins from the downstream PPI testing dataset. See the manuscript for more details. It is referred to as <code>squeezeprot_u50</code> by the code for the manuscript.</dd>
+
+</dl>
+<h3 id="non-pllm-based-ppi-inference-methods">Non-pLLM-based PPI Inference Methods</h3>
+<dl>
+<dt>
+	<a id="25dbf13697b1c8f7e89c1901429d7e2c">RAPPPID</a> 
+</dt>
+<dd>RAPPPID is a non-pLLM-based PPI inference method described in <a href="https://doi.org/10.1093/bioinformatics/btac429">Szymborski <em>et al.</em></a> and is based on an AWD-LSTM regularized neural network.</dd>
+
+</dl>
+<h2 id="glossary">Glossary</h2>
+<p><dl class="mkdocs-ezglossary-summary" id="term">
+    
+    
+    <dt>
+        
+        <a href="../glossary/#ecdd2ea55eff55cfa44c063b94b70fa5"
+           title="">ESM</a>
+        
+    </dt>
+    <dd>
+        <ul>
+	    
+            
+                <li>
+                    <a href="../autofigures/usage/#a7359539c27837c8906ab212af07e0a8">Usage</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#c8da3bea52fdc3d6e6e92784aab9df8c">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#d9bc39c2f38ba84e7d1d1d93e65f34ea">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#82b82b539ba17ada3e1fceeac5b59c84">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#7cb0a8cbc790ed89bd11246dc1d2ac03">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#50f350042ee758d9dbfe83ac834203ba">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#1260176079637d0aa5daf518ef56bf73">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/encode_llm/#828febf579297b15eb0ff59bd2839f89">encode_llm</a>
+                </li>
+            
+	    
+            
+                <li>
+                    <a href="../glossary/#ecdd2ea55eff55cfa44c063b94b70fa5">Definitions &amp; Glossary</a>
+                </li>
+            
+	    
+        </ul>
+    </dd>
+    
+    
+    <dt>
+        
+        <a href="../glossary/#568a531ebcf98c28e9ed5384d069f668"
+           title="">ProSE</a>
+        
+    </dt>
+    <dd>
+        <ul>
+	    
+            
+                <li>
+                    <a href="../autofigures/usage/#b15952cf6f01367f42061bef3cfc1663">Usage</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#0b92a5db23036f1585f3f502772d3397">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#b922d8d61c2a7c6e81071548ee777595">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#ed32caca5e5af6bb72a9d328f23875a0">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#659832efca88715befa99e5ca57f411e">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#a6273998bbf1445e470d90d729ecff46">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#4a184840a7f44dd8364aa473c335b9de">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#f4bd99e1ca3981a277ca6cd77c3f1140">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#12d15804b5105edca3cee8c6c35fa83d">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/encode_llm/#1b77467e3775d534924131510d4f3f9e">encode_llm</a>
+                </li>
+            
+	    
+            
+                <li>
+                    <a href="../glossary/#568a531ebcf98c28e9ed5384d069f668">Definitions &amp; Glossary</a>
+                </li>
+            
+	    
+        </ul>
+    </dd>
+    
+    
+    <dt>
+        
+        <a href="../glossary/#ff7c909d4d09ccb9aafbba77a9f9b51f"
+           title="">ProtBERT</a>
+        
+    </dt>
+    <dd>
+        <ul>
+	    
+            
+                <li>
+                    <a href="../autofigures/usage/#e61e4281785870f7178232642792545f">Usage</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#6839a91d8b9712b750c080f250beaf52">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#aa4191b8d2fd0a7cdf60b3a97f4fe6fb">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#7d14ac2800daecb864917f4379ad369a">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#78f3c6d1ba58aa9337d9c65754f7973f">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#c2d5e08e50429f7c3914d5291b5d2e24">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#df7130f86d608994bfe6a0bf1202b0e3">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/encode_llm/#a5170c4f192387b213ad00918337e2ac">encode_llm</a>
+                </li>
+            
+	    
+            
+                <li>
+                    <a href="../glossary/#ff7c909d4d09ccb9aafbba77a9f9b51f">Definitions &amp; Glossary</a>
+                </li>
+            
+	    
+        </ul>
+    </dd>
+    
+    
+    <dt>
+        
+        <a href="../glossary/#b5264db575f2ffde52db16f45759e16f"
+           title="">ProtT5</a>
+        
+    </dt>
+    <dd>
+        <ul>
+	    
+            
+                <li>
+                    <a href="../autofigures/usage/#c7f1ada6f7bab4ad2d1a28e62e4fc382">Usage</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#6cdfc819dbaeeb8bcece874a979fb48f">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#5d159b92878bd88977e5b825add81273">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#68d96576afa98a69bd7725a3b57eac67">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#7bd60cfb8d16091f84fc1113bd38448c">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#d8b22c8694357e38dc6c173e273b37e2">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#b85a9f0e0c1ef486ae0de54cb9646a48">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/encode_llm/#5d8331738bba0085ea22877d1a6a9b9c">encode_llm</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/ppi_bench/#9c3954907a85287215ff77e09ebbcfc6">ppi_bench</a>
+                </li>
+            
+	    
+            
+                <li>
+                    <a href="../glossary/#b5264db575f2ffde52db16f45759e16f">Definitions &amp; Glossary</a>
+                </li>
+            
+	    
+        </ul>
+    </dd>
+    
+    
+    <dt>
+        
+        <a href="../glossary/#e04f334bb55df9da76c62e85593241ef"
+           title="">ProteinBERT</a>
+        
+    </dt>
+    <dd>
+        <ul>
+	    
+            
+                <li>
+                    <a href="../autofigures/usage/#5361e29c6576c68a65cdd85bf90e6548">Usage</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#178d9d12d16959917c4beed3f1eeec70">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#9d7c33428c3a54835b3d4bc9bf7ce8b8">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#f363e9877fd6223d350099bfc77f499c">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#706dc3bd88d8844f648b1e3ef5895833">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#fb9168a49ae6c2838262471e320a947a">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#cf8b512e2e1a9ba402b3be49e490732d">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/encode_llm/#8beaa172d3b3879df6e3b51169eea3a6">encode_llm</a>
+                </li>
+            
+	    
+            
+                <li>
+                    <a href="../glossary/#e04f334bb55df9da76c62e85593241ef">Definitions &amp; Glossary</a>
+                </li>
+            
+	    
+        </ul>
+    </dd>
+    
+    
+    <dt>
+        
+        <a href="../glossary/#25dbf13697b1c8f7e89c1901429d7e2c"
+           title="">RAPPPID</a>
+        
+    </dt>
+    <dd>
+        <ul>
+	    
+            
+                <li>
+                    <a href="../data/#9159312df955d3df62202d26fabe6a88">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#4712bccc761ab7c07187c9a92ab985b1">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#078c56b1ccfcf4ce67314b658eb3bf3f">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#3357f962d076553741173662ae74bd62">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#d1f83b55d945492a49bb6e6133b85860">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/encode_llm/#6f5862880a850bfeacc8b9782d979ae9">encode_llm</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/encode_llm/#95c17e4658ace091a573c94f8b904601">encode_llm</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/encode_llm/#6995541f94d3acdfe84aafb7104c360a">encode_llm</a>
+                </li>
+            
+	    
+            
+                <li>
+                    <a href="../glossary/#25dbf13697b1c8f7e89c1901429d7e2c">Definitions &amp; Glossary</a>
+                </li>
+            
+	    
+        </ul>
+    </dd>
+    
+    
+    <dt>
+        
+        <a href="../glossary/#dad46adba15c3f04390dc2e4565c081b"
+           title="">SqueezeProt-SP (Non-strict)</a>
+        
+    </dt>
+    <dd>
+        <ul>
+	    
+            
+                <li>
+                    <a href="../autofigures/usage/#584edec030f8760efd4c6ad493bde0c0">Usage</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#5641c4c6aef3617ccfaf1b18efcce5d3">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#80b75a2e8bfaa13514d3ab1601285d57">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#e8433a7e92812dcb21642d388cd5c45b">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#ad032bbcdf3269e40f53a0185f39ccad">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#ced4c495876337198eb3a4f76b7fd355">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#7e694e49434319085d428a3d9ee75824">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#bb3e9e21e5976ea654005f3165ace653">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#1e12c08ffe2477074484b2342e522f00">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#41dc7f92c297c5db4f111e48b58dc5ba">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#de8dde9323855077e013c4943a6b1edc">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#4ebdb3153fc00ff551c49de69b391ace">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#22c04fe992ab847aefb1fe3323eebf33">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#8ddbfeb54bd8c70c0320f2709efc9b22">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#7bbbbd0f470c22d3774533fd06c347cf">embedding_dbs</a>
+                </li>
+            
+	    
+            
+                <li>
+                    <a href="../glossary/#dad46adba15c3f04390dc2e4565c081b">Definitions &amp; Glossary</a>
+                </li>
+            
+	    
+        </ul>
+    </dd>
+    
+    
+    <dt>
+        
+        <a href="../glossary/#1a6429cc375e97777444d929e4f70fe0"
+           title="">SqueezeProt-SP (Strict)</a>
+        
+    </dt>
+    <dd>
+        <ul>
+	    
+            
+                <li>
+                    <a href="../autofigures/usage/#9344ca2654138ea7c7ad6fba6cbcdb4f">Usage</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#eea3b489c433af6449a610cd8d1752bc">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#10208d50758e873debfe4f07c550be33">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#ef86c3cf3e09816841b9546b82f6651f">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#d5eae44ab33f3b3d2775dd0c701adb02">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#ad0b0668b363d834808ee2445387ee6d">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#7743ed68c88096c95b1b85a90eb89519">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#0e57d178786906317dc4d2bb2cdd14b0">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#9de20f7639e64a0e5fb9a8855cb6f53e">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#58e8677f380a4227c7c8f72dd65123d7">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#448fd0319eead3e41a024657a2f78fd4">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#7001ec1debe33e0534b754ce7576b471">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#3c0d2ac3d2aa00330235b2e6997a8d5f">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#6a509d36c7535122046a2fbbe9524dce">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#bf84c159d8328676fc0e3c804631eb34">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/encode_llm/#a4f6462cc7b41cfe38d49c4387956952">encode_llm</a>
+                </li>
+            
+	    
+            
+                <li>
+                    <a href="../glossary/#1a6429cc375e97777444d929e4f70fe0">Definitions &amp; Glossary</a>
+                </li>
+            
+	    
+        </ul>
+    </dd>
+    
+    
+    <dt>
+        
+        <a href="../glossary/#86951eb003f13e08fc3ca3a1d2959c48"
+           title="">SqueezeProt-U50</a>
+        
+    </dt>
+    <dd>
+        <ul>
+	    
+            
+                <li>
+                    <a href="../autofigures/usage/#d1da40ed80b68065d3b197976fc3e571">Usage</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#0bcb9efa6b21178d5c490c8dbe979bdc">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#498a367538c685853bd33cb4d002ebef">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#55b404ba56a5090107e0c9451bc4d482">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#a814cce9039e94c972e613cfea2af0b3">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../data/#f022fbb57ff381b7adc0c85ee00e8a45">Data</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#05c65da403d7abdabfd984d77a5b68c9">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/embedding_dbs/#b7b0856155578f40d695a98f06b84fe5">embedding_dbs</a>
+                </li>
+            
+                <li>
+                    <a href="../experiments/encode_llm/#92331ea3024b1f61c8e94d9cbcb56916">encode_llm</a>
+                </li>
+            
+	    
+            
+                <li>
+                    <a href="../glossary/#86951eb003f13e08fc3ca3a1d2959c48">Definitions &amp; Glossary</a>
+                </li>
+            
+	    
+        </ul>
+    </dd>
+    
+</dl></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+    
+  </body>
+</html>
