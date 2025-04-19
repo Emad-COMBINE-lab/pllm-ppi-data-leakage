@@ -33,7 +33,7 @@ from autofigures import (
 if __name__ == "__main__":
     fire.Fire(
         {
-            "run": run_all,
+            "run_all": run_all,
             "get_scores": get_scores,
             "speed": speed,
             "strict_nonstrict": strict_nonstrict,

@@ -16,6 +16,10 @@ This code base contains many small experiments, as well as the `autofigures` pro
 
 Install time for the various experiments in this repository vary greatly and depend on hardware (_e.g._, disk I/O), but typically will take less than 15 minutes for each code base.
 
+## Demo
+
+To see a demo of how to regenerate all the figures in the manuscript, see our [demo](demo.md).
+
 ## License
 
 ### Code

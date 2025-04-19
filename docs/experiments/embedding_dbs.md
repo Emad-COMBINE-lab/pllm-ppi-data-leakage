@@ -65,16 +65,16 @@ Either "cpu" or "cuda" depending on whether sequences are to be embedded on the 
 Path to save the embeddings database to. The default paths change with the pLLMs you specify:
 
 | pLLM                               |Path |
-|------------------------------------|-----|
+|------------------------------------|-----------------------------------------------------|
 | <term:SqueezeProt-SP (Non-strict)> |`../../data/embeddings/squeezeprot_sp_nonstrict.lmdb`|
-| <term:SqueezeProt-SP (Strict)> |`../../data/embeddings/squeezeprot_sp_strict.lmdb`|
-| <term:SqueezeProt-U50> |`../../data/embeddings/squeezeprot_u50.lmdb`|
-| <term:ProtBERT> |`../../data/embeddings/prottrans_bert.lmdb`|
-| <term:ProtT5>|`../../data/embeddings/prottrans_t5.lmdb`|
-| <term:ProteinBERT>|`../../data/embeddings/proteinbert.lmdb`|
-| <term:ProSE>|`../../data/embeddings/prose.lmdb`|
-| <term:ESM>|`../../data/embeddings/esm.lmdb`|
-| <term:RAPPPID>|`../../data/embeddings/rapppid.lmdb`|
+| <term:SqueezeProt-SP (Strict)>     |`../../data/embeddings/squeezeprot_sp_strict.lmdb`   |
+| <term:SqueezeProt-U50>             |`../../data/embeddings/squeezeprot_u50.lmdb`         |
+| <term:ProtBERT>                    |`../../data/embeddings/prottrans_bert.lmdb`          |
+| <term:ProtT5>                      |`../../data/embeddings/prottrans_t5.lmdb`            |
+| <term:ProteinBERT>                 |`../../data/embeddings/proteinbert.lmdb`             |
+| <term:ProSE>                       |`../../data/embeddings/prose.lmdb`                   |
+| <term:ESM>                         |`../../data/embeddings/esm.lmdb`                     |
+| <term:RAPPPID>                     |`../../data/embeddings/rapppid.lmdb`                 |
 
 ## Requirements
 

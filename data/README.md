@@ -14,7 +14,7 @@ The torrent file is `pllm-ppi-data-leakage.torrent` in this folder, and you use 
 After downloading, extract the file here using this command:
 
 ```
-tar -I zstd -xvf data.tar.zst
+tar -I zstd -xvf data.tar.zstd
 ```
 
 If you can't use `tar` on your platform, you can maybe use [PeaZip](https://peazip.github.io/index.html).

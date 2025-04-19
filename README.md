@@ -1,4 +1,7 @@
-# Code and Data for _"A flaw in using pre-trained pLLMs in protein-protein interaction inference models"_
+# pllm-ppi-data-leakage
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
+This repository houses the code and data for _"A flaw in using pre-trained pLLMs in protein-protein interaction inference models"_.
 
 ## How To Use this Repository
 
@@ -7,7 +10,7 @@ Please consult the [documentation](https://Emad-COMBINE-lab.github.io/pllm-ppi-d
 
 ## Where's the Data?
 
-There are 16GiB of compressed data which is too large for Git to reasonably handle. Data files can be downloaded via the BitTorrent protocol. More information is available in the [data](data/README.md) folder.
+There are 16GiB of compressed data which is too large for Git to reasonably handle. Data files can be downloaded via the HTTP and BitTorrent protocol. More information is available in the [data](data/README.md) folder.
 
 ## Installation & Requirements
 
@@ -16,6 +19,10 @@ Instructions for installation, as well as details on requirements and dependenci
 Install time for the various experiments in this repository vary greatly and depend on hardware (_e.g._, disk I/O), but typically will take less than 15 minutes for each code base.
 
 Python 3 is required to locally building the online documentation site. Package dependencies is available in the `requirements.txt` file in this folder. All code was tested on Linux (Debian-based Distrubtions).
+
+## Demo
+
+A demonstration of how to regenerate all the figures in the manuscript is available through the [online documentation](https://Emad-COMBINE-lab.github.io/pllm-ppi-data-leakage/demo).
 
 ## License
 
