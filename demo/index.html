@@ -9,10 +9,6 @@
       
       
       
-        <link rel="prev" href="..">
-      
-      
-        <link rel="next" href="installation/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +16,7 @@
     
     
       
-        <title>Home - A flaw in using pre-trained pLLMs in protein-protein interaction inference models</title>
+        <title>Autofigures Demo - A flaw in using pre-trained pLLMs in protein-protein interaction inference models</title>
       
     
     
@@ -72,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#autofigures" class="md-skip">
+        <a href="#autofigures-demo" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Autofigures Demo
             
           </span>
         </div>
@@ -216,13 +212,11 @@
         
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../autofigures/" class="md-tabs__link">
           
   
   autofigures
@@ -343,28 +337,23 @@
       
   
   
-    
   
   
-  
     
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -376,7 +365,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             autofigures
@@ -387,31 +376,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Home
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../autofigures/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -421,44 +389,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Installation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Usage
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -471,7 +401,7 @@
   
   
     <li class="md-nav__item">
-      <a href="installation/" class="md-nav__link">
+      <a href="../autofigures/installation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -493,7 +423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="usage/" class="md-nav__link">
+      <a href="../autofigures/usage/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -806,18 +736,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+  <a href="#0-set-up-downloading-code-and-data" class="md-nav__link">
     <span class="md-ellipsis">
-      Installation
+      0. Set-Up: Downloading code and data
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
+  <a href="#1-install-dependencies" class="md-nav__link">
     <span class="md-ellipsis">
-      Usage
+      1. Install dependencies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-generate-all-the-figures" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Generate all the figures.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      What next?
     </span>
   </a>
   
@@ -839,12 +787,72 @@
 
 
 
-<h1 id="autofigures">autofigures</h1>
-<p>This section of the documentation concerns the automatic generation of plots and graphs present in the manuscript. A command-line tool, named <code>autofigures</code>, was created to facilitate this.</p>
-<h2 id="installation">Installation</h2>
-<p>Read more about how to install <code>autofigures</code> on the <a href="installation/">Installation</a> page.</p>
-<h2 id="usage">Usage</h2>
-<p>Read more about how to use <code>autofigures</code> on the <a href="usage/">Usage</a> page.</p>
+<h1 id="autofigures-demo">Autofigures Demo</h1>
+<p>This document is a demonstration as to how to quickly regenerate all figures in the manuscript using the <a href="/autofigures/"><code>autofigures</code></a> programme. This demo was tested on a Debian-based Linux distribution, but should work on MacOS and Windows with the <a href="https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux">Windows Subsytem for Linux</a>.</p>
+<h2 id="0-set-up-downloading-code-and-data">0. Set-Up: Downloading code and data</h2>
+<p>The first step is to pull the code from GitHub</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Emad-COMBINE-lab/pllm-ppi-data-leakage.git
+<span class="nb">cd</span><span class="w"> </span>pllm-ppi-data-leakage
+</code></pre></div>
+<p>Next, after having to download the compressed data archive from <a href="https://drive.proton.me/urls/XP0QHQ51AM#d9HEKqgnvfEf">this mirror</a>. Note: the download is &gt;16GiB, which will take some time to download.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>data
+<span class="c1"># download the data.tar.zstd file here</span>
+tar<span class="w"> </span>-I<span class="w"> </span>zstd<span class="w"> </span>-xvf<span class="w"> </span>data.tar.zstd
+</code></pre></div>
+<h2 id="1-install-dependencies">1. Install dependencies</h2>
+<p>You can use <code>pip</code> or <code>poetry</code> to install dependencies, but I prefer uv.</p>
+<p>Follow <a href="https://docs.astral.sh/uv/getting-started/installation/">these instructions</a> to install <code>uv</code>. </p>
+<p>Next, update your local python environment by running</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>../autofigures
+uv<span class="w"> </span>sync
+</code></pre></div>
+<p>The figures use the <a href="https://rsms.me/inter/">Inter font</a>, so you'll have to install that as well if you want the figures to look like they do in the manuscript.</p>
+<h2 id="2-generate-all-the-figures">2. Generate all the figures.</h2>
+<p>Next, we can regenerate all the figures using</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>autofigures<span class="w"> </span>run_all
+</code></pre></div>
+<p>This should take less than 45 minutes, and result in the following files in the <code>out</code> directory:</p>
+<div class="highlight"><pre><span></span><code>total<span class="w"> </span>34M
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>313K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>acc_by_length.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w">  </span>79K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>concordance.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w">  </span>48K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>kw_k_ndcg.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>214K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>kw_ndcg_markers.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>432K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_dscript.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>450K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_esm.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>436K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_intrepppid.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>423K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_pipr.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>447K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_prose.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>450K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_proteinbert.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>451K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_prottrans_bert.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>457K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_prottrans_t5.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>435K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_rapppid.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>400K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_richoux.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w">  </span>15K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_sizes.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>450K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_sprint.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>443K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_squeezeprot_sp_nonstrict.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>444K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_squeezeprot_sp_strict.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>444K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_heatmap_squeezeprot_u50.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>282K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>length_histogram.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>365K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>mutation_esm.png
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>384K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>mutation_prose.png
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>413K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>mutation_proteinbert.png
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>378K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>mutation_prottrans_bert.png
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>331K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>mutation_prottrans_t5.png
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>423K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>mutation_squeezeprot_sp_nonstrict.png
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>393K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>mutation_squeezeprot_sp_strict.png
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>355K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>mutation_squeezeprot_u50.png
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>142K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>mutation.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w">  </span>22M<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>sars_cov2_breakdown.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span><span class="m">1</span>.6M<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>sars_cov2_roc_highlight.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>960K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>sars_cov2_roc.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w"> </span>107K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>speed.svg
+-rw-r--r--.<span class="w"> </span><span class="m">1</span><span class="w"> </span>jszym<span class="w"> </span>jszym<span class="w">  </span>43K<span class="w"> </span>Apr<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">23</span>:10<span class="w"> </span>strict_nonstrict.svg
+</code></pre></div>
+<p>These files are all the panels (or components of the panels) in the figure.</p>
+<p>For example, <code>speed.svg</code> corresponds to Fig. 1b in the manuscript and looks like:</p>
+<p><img alt="Speed figure, Fig. 1b" src="../speed.svg" /></p>
+<h2 id="what-next">What next?</h2>
+<p>Check out the <a href="/autofigures">autofigures</a> and <a href="/experiments">Experiments</a> tabs above to geenerate individual figures or run individual experiments.</p>
 
 
 
