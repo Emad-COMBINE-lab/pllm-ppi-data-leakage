@@ -1,6 +1,6 @@
 # pllm-ppi-data-leakage
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![DOI: 10.1101/2025.04.21.649858](https://badgen.net/badge/biorxiv/10.1101%2F2025.04.21.649858/red)](https://doi.org/10.1101/2025.04.21.649858)
+[![DOI: 10.1101/2025.04.21.649858](https://badgen.net/badge/bioRxiv/10.1101%2F2025.04.21.649858/red)](https://doi.org/10.1101/2025.04.21.649858)
 
 
 This repository houses the code and data for _"[A flaw in using pre-trained pLLMs in protein-protein interaction inference models](https://doi.org/10.1101/2025.04.21.649858)"_.
