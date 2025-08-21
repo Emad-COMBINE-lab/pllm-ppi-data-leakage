@@ -23,6 +23,8 @@ import tables
 from tqdm import tqdm
 from pathlib import Path
 import sys
+from random import randint
+from typing import Optional
 
 sys.path.insert(1, "../encode_llm")
 from fasta import stream_fasta
@@ -85,7 +87,18 @@ def get_sequences_csv(input_path: Path, trunc: int = 1024):
             yield row["accession"], row["sequence"]
 
 
+BASE_DIR = Path("../../data/embeddings")
+
 class Embed(object):
+
+    def random_window(self, seq, max_length: int) -> str:
+        if len(seq) <= max_length:
+            return seq[:max_length]
+        else:
+            rand_start = randint(0, len(seq)-max_length)
+            rand_end = rand_start + max_length
+            return seq[rand_start, rand_end]
+
     def _embed(
         self,
         input_path: Path,
@@ -94,6 +107,7 @@ class Embed(object):
         max_length: int,
         max_batch_size: int,
         device: str,
+        random_window: bool = False
     ):
         if input_path.endswith(".fasta") or input_path.endswith(".fasta.gz"):
             num_sequences = num_sequences_fasta
@@ -119,7 +133,10 @@ class Embed(object):
         for idx, (upkb_ac, seq) in tqdm(
             enumerate(get_sequences(input_path)), total=total
         ):
-            seq = seq[:max_length]
+            if random_window:
+                seq = self.random_window(seq, max_length)
+            else:
+                seq = seq[:max_length]
 
             batch_seqs.append(seq)
             batch_acs.append(upkb_ac)
@@ -141,15 +158,27 @@ class Embed(object):
                 for vec_ac, vec in zip(batch_acs, vecs):
                     txn.put(vec_ac.encode("utf8"), json.dumps(vec).encode("utf8"))
 
+    def _generate_output_path(self, slug: str, output_path: Optional[Path], random_window: bool):
+
+        if output_path is None and random_window is False:
+            output_path = BASE_DIR / f"{slug}.lmdb"
+        elif output_path is None:
+            output_path = BASE_DIR / f"{slug}.random.lmdb"
+
+        return output_path
+
     def squeezeprot_sp_nonstrict(
         self,
         input_path: Path,
         max_batch_size: int,
         device="cpu",
-        output_path: Path = Path("../../data/embeddings/squeezeprot-sp.nonstrict.lmdb"),
+        output_path: Path = None,
+        random_window: bool = False
     ):
         print("loading SqueezeBERT-SP (Non-strict)")
         import squeezebert
+
+        output_path = self._generate_output_path("squeezeprot-sp.nonstrict", output_path, random_window)
 
         def encoder(seq, device):
             return squeezebert.encode_batch(
@@ -158,17 +187,20 @@ class Embed(object):
                 weights_path="../../data/chkpts/squeezeprot-sp.non-strict/checkpoint-1390896",
             )
 
-        self._embed(input_path, output_path, encoder, 512, max_batch_size, device)
+        self._embed(input_path, output_path, encoder, 512, max_batch_size, device, random_window)
 
     def squeezeprot_sp_strict(
         self,
         input_path: Path,
         max_batch_size: int,
         device="cpu",
-        output_path: Path = Path("../../data/embeddings/squeezeprot-sp.strict.lmdb"),
+        output_path: Path = None,
+        random_window: bool = False
     ):
         print("loading SqueezeBERT-SP (Strict)")
         import squeezebert
+
+        output_path = self._generate_output_path("squeezeprot-sp.nonstrict", output_path, random_window)
 
         def encoder(seq, device):
             return squeezebert.encode_batch(
@@ -184,16 +216,19 @@ class Embed(object):
         input_path: Path,
         max_batch_size: int,
         device="cpu",
-        output_path: Path = Path("../../data/embeddings/squeezebert-u50.lmdb"),
+        output_path: Path = None,
+        random_window: bool = False
     ):
         print("loading SqueezeBERT-U50")
         import squeezebert
+
+        output_path = self._generate_output_path("squeezebert-u50", output_path, random_window)
 
         def encoder(seq, device):
             return squeezebert.encode(
                 seq,
                 device=device,
-                weights_path="../../data/chkpts/squeezeprot-u50/checkpoint-2477920",
+                weights_path="../../data/chkpts/squeezeprot-u50.non-strict/checkpoint-2477920",
             )
 
         self._embed(input_path, output_path, encoder, 512, max_batch_size, device)
@@ -203,10 +238,13 @@ class Embed(object):
         input_path: Path,
         max_batch_size: int,
         device="cpu",
-        output_path: Path = Path("../../data/embeddings/prottrans_bert.lmdb"),
+        output_path: Path = None,
+        random_window: bool = False
     ):
         print("loading ProtBERT")
         import prottrans_bert
+
+        output_path = self._generate_output_path("prottrans_bert", output_path, random_window)
 
         encoder = prottrans_bert.encode_batch
 
@@ -217,12 +255,15 @@ class Embed(object):
         input_path: Path,
         max_batch_size: int,
         device="cpu",
-        output_path: Path = Path("../../data/embeddings/prottrans_t5.lmdb"),
+        output_path: Path = None,
+        random_window: bool = False
     ):
         print("loading ProtT5")
         import prottrans_t5
 
         encoder = prottrans_t5.encode_batch
+
+        output_path = self._generate_output_path("prottrans_t5", output_path, random_window)
 
         self._embed(input_path, output_path, encoder, 512, max_batch_size, device)
 
@@ -231,12 +272,15 @@ class Embed(object):
         input_path: Path,
         max_batch_size: int,
         device="cpu",
-        output_path: Path = Path("../../data/embeddings/proteinbert.lmdb"),
+        output_path: Path = None,
+        random_window: bool = False
     ):
         print("loading ProteinBERT")
         import proteinberter
 
         encoder = proteinberter.encode_batch
+
+        output_path = self._generate_output_path("proteinbert", output_path, random_window)
 
         self._embed(input_path, output_path, encoder, 1022, max_batch_size, device)
 
@@ -245,12 +289,15 @@ class Embed(object):
         input_path: Path,
         max_batch_size: int,
         device="cpu",
-        output_path: Path = Path("../../data/embeddings/prose.lmdb"),
+        output_path: Path = None,
+        random_window: bool = False
     ):
         print("loading ProSE")
         import proser
 
         encoder = proser.encode_batch
+
+        output_path = self._generate_output_path("prose", output_path, random_window)
 
         self._embed(input_path, output_path, encoder, 9999999, max_batch_size, device)
 
@@ -260,11 +307,14 @@ class Embed(object):
         max_batch_size: int,
         device="cpu",
         output_path: Path = Path("../../data/embeddings/esm.lmdb"),
+        random_window: bool = False
     ):
         print("loading ESM")
         import esmer
 
         encoder = esmer.encode_batch
+
+        output_path = self._generate_output_path("esm", output_path, random_window)
 
         self._embed(
             input_path, output_path, encoder, 1024, max_batch_size, device=device
@@ -275,13 +325,16 @@ class Embed(object):
         input_path: Path,
         max_batch_size: int,
         device="cpu",
-        output_path: Path = Path("../../data/embeddings/rapppid.lmdb"),
+        output_path: Path = None,
+        random_window: bool = False
     ):
         print("loading RAPPPID")
         # if max_batch_size > 0:
         #    "RAPPPID batched encoding not implemented, running sequentially"
         #    max_batch_size = 0
         import rapppid
+
+        output_path = self._generate_output_path("rapppid", output_path, random_window)
 
         encoder = rapppid.encode_batch
 
