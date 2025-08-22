@@ -20,7 +20,7 @@ from pathlib import Path
 from autofigures.get_scores import get_scores
 from autofigures.strict_nonstrict import strict_nonstrict
 from autofigures.speed import speed
-from autofigures.concordance import concordance
+from autofigures.concordance import concordance, concordance2
 from autofigures.length_histogram import length_histogram
 from autofigures.acc_by_length import acc_by_length
 from autofigures.length_heatmap import length_heatmap

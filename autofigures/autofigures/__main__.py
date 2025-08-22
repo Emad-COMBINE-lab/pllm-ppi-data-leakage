@@ -22,6 +22,7 @@ from autofigures import (
     strict_nonstrict,
     speed,
     concordance,
+    concordance2,
     length_histogram,
     acc_by_length,
     length_heatmap,
@@ -44,5 +45,6 @@ if __name__ == "__main__":
             "sars_cov2": sars_cov2,
             "mutation": mutation,
             "acc_by_length": acc_by_length,
+            "concordance2": concordance2
         }
     )

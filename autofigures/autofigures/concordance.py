@@ -30,6 +30,7 @@ from autofigures.utils import (
     traditional_scores,
     plot_style,
     colours,
+    fancy_model_names
 )
 
 
@@ -389,16 +390,16 @@ def concordance(
 
             if result_idx == 0:
                 marker = "^"
-                label = "pLLM v. SqueezeProt-SP (non-strict)"
+                label = "pLM v. SqueezeProt-SP (non-strict)"
             elif result_idx == 1:
                 marker = "v"
-                label = "pLLM v. SqueezeProt-SP (strict)"
+                label = "pLM v. SqueezeProt-SP (strict)"
             elif result_idx == 2:
                 marker = "s"
-                label = "non-pLLM v. SqueezeProt-SP (non-strict)"
+                label = "non-pLM v. SqueezeProt-SP (non-strict)"
             elif result_idx == 3:
                 marker = "D"
-                label = "non-pLLM v. SqueezeProt-SP (strict)"
+                label = "non-pLM v. SqueezeProt-SP (strict)"
 
             if len(results[measure]) == 3:
                 x = np.ones(len(results[measure])) * (result_idx * 2.5) - 0.25
@@ -433,3 +434,80 @@ def concordance(
     # print(trad_results)
     # print('---')
     # print(pllm_trad_results)
+
+def concordance2(
+    output_folder: Optional[Union[Path, str]] = None,
+    data_folder: Optional[Union[Path, str]] = None,
+):
+    plot_style()
+
+    output_folder, data_folder = default_paths(output_folder, data_folder)
+
+    df1 = merge_scores(output_folder, seeds=[1])
+    df2 = traditional_scores(data_folder)
+
+    df = pd.concat([df1, df2])
+
+    pllm_names = ["prottrans_t5", "esm", "prottrans_bert", "prose", "proteinbert", "squeezeprot_u50"]
+    trad_names = ["rapppid", "dscript", "pipr", "richoux", "sprint"]
+
+    pllm_results = {}
+    trad_results = {}
+
+    for model_name in pllm_names:
+        pllm_results[model_name] = get_kappas(df, pllm_names, [model_name])
+        trad_results[model_name] = get_kappas(df, trad_names, [model_name])
+
+    measures = ["kappa"]
+    loc = "lower left"
+    yticks_major = np.arange(-1, 1.2, 0.2)
+    yticks_minor = np.arange(-1, 1.1, 0.1)
+
+    f, axs = plt.subplots(3, 2, figsize=(10, 10))
+
+    for model_idx, model_name in enumerate(pllm_names):
+
+        print(f"coord ({model_idx // 2}, {model_idx % 2})")
+        
+        axs[model_idx // 2, model_idx % 2].grid(axis="y")
+        axs[model_idx // 2, model_idx % 2].grid(which="minor", linestyle=":", axis="y")
+        axs[model_idx // 2, model_idx % 2].set_axisbelow(True)
+
+        for result_idx, results in enumerate(
+            [
+                pllm_results,
+                trad_results,
+            ]
+        ):
+            ylabel = "Cohen's κ"
+
+            if result_idx == 0:
+                marker = "s"
+                label = f"pLM v. {fancy_model_names[model_name]}"
+            elif result_idx == 1:
+                marker = "o"
+                label = f"non-pLM v. {fancy_model_names[model_name]}"
+
+            x = simple_beeswarm(results[model_name]["kappa"], 1)
+            x += result_idx * 3.5
+
+            print("kappa", model_name, label, results[model_name]["kappa"])
+            axs[model_idx // 2, model_idx % 2].scatter(
+                x,
+                results[model_name]["kappa"],
+                c=colours[result_idx % 2],
+                ec="k",
+                s=75,
+                marker=marker,
+                label=label,
+            )
+            # axs[measure_idx].boxplot(results[measure], positions=[result_idx * 2.5], widths=[2.5])
+            axs[model_idx // 2, model_idx % 2].set_yticks(yticks_major, minor=False)
+            axs[model_idx // 2, model_idx % 2].set_yticks(yticks_minor, minor=True)
+            axs[model_idx // 2, model_idx % 2].set_xticks([])
+            axs[model_idx // 2, model_idx % 2].set_ylabel(ylabel)
+
+            axs[model_idx // 2, model_idx % 2].legend(loc=loc, edgecolor="k", fancybox=False)
+
+    plt.tight_layout()
+    plt.savefig(output_folder / "figures/concordance2.svg")
