@@ -29,6 +29,7 @@ from autofigures import (
     sars_cov2,
     mutation,
     kw,
+    chi
 )
 
 if __name__ == "__main__":
@@ -45,6 +46,7 @@ if __name__ == "__main__":
             "sars_cov2": sars_cov2,
             "mutation": mutation,
             "acc_by_length": acc_by_length,
-            "concordance2": concordance2
+            "concordance2": concordance2,
+            "chi": chi
         }
     )

@@ -24,6 +24,33 @@ import tables as tb
 import torch
 from pathlib import Path
 
+class RapppidDataset(Dataset):
+    def __init__(self, dataset_path, c_type, split):
+        super().__init__()
+
+        self.dataset_path = dataset_path
+        self.c_type = c_type
+        self.split = split
+
+    def __getitem__(self, idx):
+        with tb.open_file(self.dataset_path) as dataset:
+            p1, p2, label = dataset.root["interactions"][f"c{self.c_type}"][
+                f"c{self.c_type}_{self.split}"
+            ][idx]
+
+        p1 = p1.decode("utf8")
+        p2 = p2.decode("utf8")
+
+        return p1, p2, 1 if label else 0
+
+    def __len__(self):
+        with tb.open_file(self.dataset_path) as dataset:
+            l = len(
+                dataset.root["interactions"][f"c{self.c_type}"][
+                    f"c{self.c_type}_{self.split}"
+                ]
+            )
+        return l
 
 class RapppidDatasetSeq(Dataset):
     def __init__(self, dataset_path, c_type, split):
