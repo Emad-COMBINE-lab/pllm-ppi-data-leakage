@@ -113,6 +113,7 @@ def get_length_by_acc_df(
 def acc_by_length(
     output_folder: Optional[Union[Path, str]] = None,
     data_folder: Optional[Union[Path, str]] = None,
+    random_window: bool = False
 ):
     plot_style()
     plt.rcParams["font.size"] = 9
@@ -133,31 +134,42 @@ def acc_by_length(
         length_by_acc_df = get_length_by_acc_df(lengths_df, output_folder, data_folder)
         length_by_acc_df.to_csv(output_folder / "tables/lengths_by_acc.csv")
 
+    random_suffix = "_random" if random_window else ""
+
     model_names = [
-        "squeezeprot_sp_strict",
-        "squeezeprot_sp_nonstrict",
-        "prottrans_bert",
-        "esm",
-        "proteinbert",
-        "prottrans_t5",
-        "prose",
+        "squeezeprot_sp_strict" + random_suffix,
+        "squeezeprot_sp_nonstrict" + random_suffix,
+        "prottrans_bert" + random_suffix,
+        "proteinbert" + random_suffix,
+        "prottrans_t5" + random_suffix,
     ]
 
+    if not random_window:
+        model_names.append("esm")
+        model_names.append("prose")
+
     context_lengths = {
-        "esm": 1024,
-        "proteinbert": 1024,
-        "prottrans_bert": 2048,
-        "prottrans_t5": 512,
-        "squeezeprot_u50": 512,
-        "squeezeprot_sp_strict": 512,
-        "squeezeprot_sp_nonstrict": 512,
-        "prose": None,
+        "esm" + random_suffix: 1024,
+        "proteinbert" + random_suffix: 1024,
+        "prottrans_bert" + random_suffix: 2048,
+        "prottrans_t5" + random_suffix: 512,
+        "squeezeprot_u50" + random_suffix: 512,
+        "squeezeprot_sp_strict" + random_suffix: 512,
+        "squeezeprot_sp_nonstrict" + random_suffix: 512,
+        "prose" + random_suffix: None,
     }
 
-    f, axs = plt.subplots(8, 1, figsize=(8, 7), sharex=True)
+    if random_window:
+        rows = 6
+        height = 5
+    else:
+        rows = 8
+        height = 7
+
+    f, axs = plt.subplots(rows, 1, figsize=(8, height), sharex=True)
 
     for idx, model_name in enumerate(model_names):
-        if model_name == "squeezeprot_sp_strict":
+        if model_name in ["squeezeprot_sp_strict", "squeezeprot_sp_strict_random"]:
             tr_color = colours[0]
             fr_color = "#620033"
         else:
@@ -197,9 +209,19 @@ def acc_by_length(
         axs[idx].set_xlim(0, 60)
 
         if model_name == "squeezeprot_sp_strict":
-            fancy_name = "SqueezeProt-SP\n(strict)"
+            fancy_name = "SqueezeProt-SP\n(Strict)"
         elif model_name == "squeezeprot_sp_nonstrict":
-            fancy_name = "SqueezeProt-SP\n(non-strict)"
+            fancy_name = "SqueezeProt-SP\n(Non-strict)"
+        elif model_name == "proteinbert_random" and random_window:
+            fancy_name = "ProteinBERT"
+        elif model_name == "prottrans_bert_random" and random_window:
+            fancy_name = "ProtBERT"
+        elif model_name == "prottrans_t5_random" and random_window:
+            fancy_name = "ProtT5-XL"
+        elif model_name == "squeezeprot_sp_strict_random" and random_window:
+            fancy_name = "SqueezeProt-SP\n(Strict)"
+        elif model_name == "squeezeprot_sp_nonstrict_random" and random_window:
+            fancy_name = "SqueezeProt-SP\n(Non-strict)"
         else:
             fancy_name = fancy_model_names[model_name]
 

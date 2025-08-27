@@ -153,6 +153,65 @@ def compute_model_scores(model_name: str, seed: int, data_folder: Path):
         ]
         db_path = data_folder / "embeddings/squeezebert.u50.lmdb"
         model_dim = 768
+    elif model_name == "squeezeprot_sp_strict_random":
+        chkpt_paths = [
+            data_folder
+            / "chkpts/ppi/M-Bo61iKCYEkn9YfQPPndEUt4Go=/epoch=75-step=23332.ckpt",
+            data_folder
+            / "chkpts/ppi/vjZhBizKCwagBTnn7BgyM_QUW6M=/epoch=13-step=4298.ckpt",
+            data_folder
+            / "chkpts/ppi/UfDwV9A1VzcZV4otmbwE4UXRto4=/epoch=16-step=5219.ckpt",
+        ]
+        db_path = data_folder / "embeddings/squeezeprot-sp.strict.random.lmdb"
+        model_dim = 768
+
+    elif model_name == "squeezeprot_sp_nonstrict_random":
+        chkpt_paths = [
+            data_folder
+            / "chkpts/ppi/JNoz7GLMm6bFMx5n11y7JaG2PmI=/epoch=75-step=23332.ckpt",
+            data_folder
+            / "chkpts/ppi/eJUJRmPa8JxKUTyn4no-Zp4fM-k=/epoch=13-step=4298.ckpt",
+            data_folder
+            / "chkpts/ppi/Tr_A8FmQEOznJiGgl5aHEtQGZIo=/epoch=16-step=5219.ckpt",
+        ]
+        db_path = data_folder / "embeddings/squeezeprot-sp.nonstrict.random.lmdb"
+        model_dim = 768
+
+    elif model_name == "prottrans_bert_random":
+        chkpt_paths = [
+            data_folder
+            / "chkpts/ppi/ziWUK3knj3Ybr40lmNZlAdFl1kg=/epoch=80-step=24867.ckpt",
+            data_folder
+            / "chkpts/ppi/s1Z32hMC9ZYDVJHKNVk8GSnSmxY=/epoch=90-step=27937.ckpt",
+            data_folder
+            / "chkpts/ppi/gM8P3wLZD8y9DUm02sZ44oYMVQ8=/epoch=80-step=24867.ckpt",
+        ]
+        db_path = data_folder / "embeddings/prottrans_bert.random.lmdb"
+        model_dim = 1024
+
+    elif model_name == "prottrans_t5_random":
+        chkpt_paths = [
+            data_folder
+            / "chkpts/ppi/B9D_CxNAolIg5KXRZn9snP6nT5E=/epoch=97-step=30086.ckpt",
+            data_folder
+            / "chkpts/ppi/3jc6fLUaR84N400Omjjv5PWIAPk=/epoch=94-step=29165.ckpt",
+            data_folder
+            / "chkpts/ppi/QHOh9va6P2A2alalfiDSQbE4viU=/epoch=78-step=24253.ckpt",
+        ]
+        db_path = data_folder / "embeddings/prottrans_t5.random.lmdb"
+        model_dim = 1024
+
+    elif model_name == "proteinbert_random":
+        chkpt_paths = [
+            data_folder
+            / "chkpts/ppi/XIhSFA6OdKcNe5ncuVBZUxgm3YQ=/epoch=46-step=14429.ckpt",
+            data_folder
+            / "chkpts/ppi/myqXv8TABJC9xYevZwuiy2nSwF8=/epoch=91-step=28244.ckpt",
+            data_folder
+            / "chkpts/ppi/CAbQqo3Ab7VdqxLdild4_0CajII=/epoch=79-step=24560.ckpt",
+        ]
+        db_path = data_folder / "embeddings/proteinbert.random.lmdb"
+        model_dim = 1562
     else:
         raise ValueError("Unknown model name '{}'".format(model_name))
 
@@ -195,6 +254,11 @@ def compute_all_scores(seed: int, data_folder: Path):
     seed_everything(seed, workers=True)
 
     model_names = [
+        "prottrans_bert_random",
+        "proteinbert_random",
+        "prottrans_t5_random",
+        "squeezeprot_sp_strict_random",
+        "squeezeprot_sp_nonstrict_random",
         "esm",
         "prottrans_bert",
         "prottrans_t5",

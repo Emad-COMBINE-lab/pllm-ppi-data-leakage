@@ -28,6 +28,7 @@ from autofigures.sars_cov2 import sars_cov2
 from autofigures.mutation import mutation
 from autofigures.kw import kw
 from autofigures.chi import chi
+from autofigures.prefix_random import prefix_random
 
 
 def run_all(
