@@ -29,7 +29,7 @@ from autofigures import (
     sars_cov2,
     mutation,
     kw,
-    chi
+    degree_correlation,
     prefix_random
 )
 
@@ -48,7 +48,7 @@ if __name__ == "__main__":
             "mutation": mutation,
             "acc_by_length": acc_by_length,
             "concordance2": concordance2,
-            "chi": chi
+            "degree_correlation": degree_correlation,
             "prefix_random": prefix_random
         }
     )
