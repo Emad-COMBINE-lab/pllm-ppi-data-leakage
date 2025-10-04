@@ -31,6 +31,7 @@ from matplotlib.colors import LinearSegmentedColormap
 from typing import Optional, Union
 from autofigures.fc_net import PPINet
 from autofigures.utils import default_paths, colours, plot_style, fancy_model_names
+from palettable.cubehelix import get_map
 
 
 def hydrate_vec(vec):
@@ -70,7 +71,7 @@ def make_cmap(cmap_colours, name):
 
 
 def scatter_hist(x, y, ax, ax_histx, ax_histy):
-    cmap = "turbo"
+    cmap = get_map("perceptual_rainbow_16").mpl_colormap
 
     # no labels
     ax_histx.tick_params(axis="x", labelbottom=False)
@@ -86,7 +87,7 @@ def scatter_hist(x, y, ax, ax_histx, ax_histy):
 
     print("scattering...")
     print(np.max(z), np.min(z), np.mean(z), np.std(z))
-    scatter = ax.scatter(x, y, c=z, s=8, cmap=cmap)
+    scatter = ax.scatter(x, y, c=z, s=8, cmap=cmap, )
     # plt.colorbar(scatter, ax=ax, cax=ax_cbar, location="bottom", label="Density")
 
     # now determine nice limits by hand:
