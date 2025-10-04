@@ -19,6 +19,7 @@ import numpy as np
 from typing import Union, Optional
 from pathlib import Path
 import matplotlib.pyplot as plt
+from scipy import stats
 from autofigures.utils import (
     colours,
     default_paths,
@@ -70,6 +71,22 @@ def strict_nonstrict(
     metric_names = [first_metric, second_metric]
     titles = ["C)", "D)"]
     width = 0.6
+
+    print("====[ STAT TESTS ]====")
+
+    print("\tOne-sided paired t-test")
+    for metric in ["auroc", "mcc", "ap", "f1"]:
+        strict_metrics = metrics["strict"][metric]
+        nonstrict_metrics = metrics["nonstrict"][metric]
+        t_result = stats.ttest_rel(strict_metrics, nonstrict_metrics, alternative='less')
+        print(f"\t\t[{metric}] {t_result.statistic}, p-value: {t_result.pvalue}")
+
+    print("\tOne-sided Wilcoxon signed rank test")
+    for metric in ["auroc", "mcc", "ap", "f1"]:
+        strict_metrics = metrics["strict"][metric]
+        nonstrict_metrics = metrics["nonstrict"][metric]
+        w_result = stats.wilcoxon(strict_metrics, nonstrict_metrics, alternative='less')
+        print(f"\t\t[{metric}] {w_result.statistic}, p-value: {w_result.pvalue}")
 
     for j in range(2):
         strict_mean = np.mean(metrics["strict"][metric_names[j]])
