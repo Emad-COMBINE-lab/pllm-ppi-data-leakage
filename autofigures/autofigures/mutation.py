@@ -14,7 +14,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+import csv
 import json
 import lmdb
 import numpy as np
@@ -325,6 +325,8 @@ def mutation(
             df = pd.DataFrame(rows)
             df.to_csv(df_path)
 
+    spearman_values = []
+
     for model_name in model_names:
         print(model_name)
         df = pd.read_csv(output_folder / f"tables/mutations_{model_name}_1.csv")
@@ -363,7 +365,15 @@ def mutation(
 
         res = spearmanr(diff, effect)
         print(model_name, "spearman", res.statistic, res.pvalue)
+        spearman_values.append({"model": model_name, "spearman": res.statistic, "pvalue": res.pvalue})
         plt.savefig(output_folder / f"figures/mutation_{model_name}.png")
+
+    with open(output_folder / "mutation_spearman.csv", "w") as f:
+        fieldnames = ['model', 'spearman', 'pvalue']
+        csv_writer = csv.DictWriter(f, fieldnames)
+        csv_writer.writeheader()
+        csv_writer.writerows(spearman_values)
+
 
     plt.figure()
     sns.set_palette(sns.color_palette(colours))
