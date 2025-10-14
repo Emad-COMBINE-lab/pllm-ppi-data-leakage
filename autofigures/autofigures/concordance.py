@@ -15,12 +15,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.metrics import cohen_kappa_score
 
+import json
+from collections import defaultdict
 from pathlib import Path
 from typing import Optional, Union, Set
 
@@ -333,8 +334,8 @@ def concordance(
     else:
         fn = get_concordances
 
-    pllm_names = ["prottrans_t5", "esm", "prottrans_bert", "prose", "proteinbert"]
-    trad_names = ["rapppid", "dscript", "pipr", "richoux", "sprint"]
+    pllm_names = ["prottrans_t5", "esm", "prottrans_bert", "prose", "proteinbert", "dscript"]
+    trad_names = ["rapppid", "pipr", "richoux", "sprint"]
 
     pllm_nonstrict_results = fn(df, pllm_names, ["squeezeprot_sp_nonstrict"])
     trad_nonstrict_results = fn(df, trad_names, ["squeezeprot_sp_nonstrict"])
@@ -377,6 +378,10 @@ def concordance(
         axs[idx].grid(which="minor", linestyle=":", axis="y")
         axs[idx].set_axisbelow(True)
 
+
+
+    payload = defaultdict(lambda: {})
+
     for measure_idx, measure in enumerate(measures):
         for result_idx, results in enumerate(
             [
@@ -391,15 +396,27 @@ def concordance(
             if result_idx == 0:
                 marker = "^"
                 label = "pLM v. SqueezeProt-SP (non-strict)"
+                plm_status = "plm"
+                strictness = "nonstrict"
+                names = pllm_names
             elif result_idx == 1:
                 marker = "v"
                 label = "pLM v. SqueezeProt-SP (strict)"
+                plm_status = "plm"
+                strictness = "strict"
+                names = pllm_names
             elif result_idx == 2:
                 marker = "s"
                 label = "non-pLM v. SqueezeProt-SP (non-strict)"
+                plm_status = "nonplm"
+                strictness = "nonstrict"
+                names = trad_names
             elif result_idx == 3:
                 marker = "D"
                 label = "non-pLM v. SqueezeProt-SP (strict)"
+                plm_status = "nonplm"
+                strictness = "strict"
+                names = trad_names
 
             if len(results[measure]) == 3:
                 x = np.ones(len(results[measure])) * (result_idx * 2.5) - 0.25
@@ -408,7 +425,8 @@ def concordance(
                 x = simple_beeswarm(results[measure], 1)
                 x += result_idx * 3.5
 
-            print(measure, label, results[measure])
+            payload_key = f"{plm_status}_{strictness}"
+            payload[payload_key][measure] = {name: measure for name, measure in zip(names, results[measure])}
 
             axs[measure_idx].scatter(
                 x,
@@ -424,6 +442,11 @@ def concordance(
             axs[measure_idx].set_yticks(yticks_minor, minor=True)
             axs[measure_idx].set_xticks([])
             axs[measure_idx].set_ylabel(ylabel)
+
+    filename = "kappa.json" if cohen_kappa else "snc.json"
+    with open(output_folder / f"tables/{filename}", 'w') as f:
+        json.dump(payload, f)
+
 
     axs[0].legend(loc=loc, edgecolor="k", fancybox=False)
 
@@ -448,14 +471,17 @@ def concordance2(
 
     df = pd.concat([df1, df2])
 
-    pllm_names = ["prottrans_t5", "esm", "prottrans_bert", "prose", "proteinbert", "squeezeprot_u50"]
-    trad_names = ["rapppid", "dscript", "pipr", "richoux", "sprint"]
+    pllm_names = ["prottrans_t5", "esm", "prottrans_bert", "prose", "proteinbert", "squeezeprot_u50", "dscript"]
+    trad_names = ["rapppid", "pipr", "richoux", "sprint"]
 
     pllm_results = {}
     trad_results = {}
 
     for model_name in pllm_names:
-        pllm_results[model_name] = get_kappas(df, pllm_names, [model_name])
+
+        pllm_names1 = filter(lambda x: x is not model_name, pllm_names)
+
+        pllm_results[model_name] = get_kappas(df, pllm_names1, [model_name])
         trad_results[model_name] = get_kappas(df, trad_names, [model_name])
 
     measures = ["kappa"]
@@ -466,6 +492,9 @@ def concordance2(
     f, axs = plt.subplots(3, 2, figsize=(10, 10))
 
     for model_idx, model_name in enumerate(pllm_names):
+
+        if model_name == 'dscript':
+            continue
 
         print(f"coord ({model_idx // 2}, {model_idx % 2})")
         
