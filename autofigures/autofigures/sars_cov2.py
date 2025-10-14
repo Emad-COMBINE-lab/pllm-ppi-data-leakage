@@ -341,11 +341,13 @@ def sars_cov2(
             fpr, tpr, _ = m.roc_curve(df["pos"], df["yhat"])
             mcc = m.matthews_corrcoef(df["pos"], df["yhat"] > 0.5)
             bacc = m.balanced_accuracy_score(df["pos"], df["yhat"] > 0.5)
+            auroc = m.roc_auc_score(df["pos"], df["yhat"])
             summary_metrics_row.append(
                 {
                     "model_name": model_name,
                     "mcc": mcc,
                     "bacc": bacc,
+                    "auroc": auroc
                 }
             )
 
