@@ -16,6 +16,7 @@ data/ppi
 data/results
 data/sequences
 data/tokenizer
+data/ppi_seq_id
 data/data.tar.zstd
 
 # Byte-compiled / optimized / DLL files
