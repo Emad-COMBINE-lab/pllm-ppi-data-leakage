@@ -98,6 +98,10 @@ def plot_style():
     # plt.rcParams['font.family'] = 'Inclusive Sans'
     plt.rcParams["font.size"] = 13
 
+def sigfig(x: float):
+    x = f"{x:.3g}"
+    x = f'{float(x):g}'
+    return x
 
 def merge_scores(output_folder: Path, seeds: Optional[List] = None):
     seeds = [1, 2, 3] if seeds is None else seeds
@@ -138,7 +142,8 @@ def traditional_scores(data_folder: Path):
 
 
 def traditional_metrics(data_folder: Path, model_name):
-    df = pd.read_csv(data_folder / "results/traditional/summary.csv")
+    path = data_folder / "results/traditional/summary.csv"
+    df = pd.read_csv(path)
 
     metrics = dict()
 
