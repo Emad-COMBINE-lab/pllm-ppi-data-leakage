@@ -17,6 +17,7 @@
 
 import json
 import os
+from multiprocessing.managers import Value
 
 import pandas as pd
 import numpy as np
@@ -82,28 +83,39 @@ def lrap_k(ys, yhats, k):
 def kw(
     output_folder: Optional[Union[Path, str]] = None,
     data_folder: Optional[Union[Path, str]] = None,
+    metric_type: str = 'ndcg'
 ):
     plot_style()
 
     output_folder, data_folder = default_paths(output_folder, data_folder)
 
-    metric_type = "ndcg"
-    score_fn = m.ndcg_score
-    filename = "kw_k_ndcg"
+    if metric_type == 'ndcg':
+        score_fn = m.ndcg_score
+    elif metric_type == 'f1':
+        score_fn = f1_k
+    elif metric_type == 'acc':
+        score_fn = acc_k
+    elif metric_type == 'lrap':
+        score_fn = lrap_k
+    else:
+        raise ValueError("Invalid metric_type")
+    filename = f"kw_k_{metric_type}"
 
-    df = pd.read_csv(data_folder / "kw/results.csv")
+    df = pd.read_csv(data_folder / "kw/results.test.csv")
 
     nonstrict_ids = df[
         (df["label_weighting"] == "log")
         & (df["loss_type"] == "asl")
-        & (df["nl_type"] == "mish")
+        & (df["nl_type"] == "relu")
+        & (df["bottleneck"] == False)
         & (df["strict"] == False)
     ].idx.tolist()
 
     strict_ids = df[
         (df["label_weighting"] == "log")
         & (df["loss_type"] == "asl")
-        & (df["nl_type"] == "mish")
+        & (df["nl_type"] == "relu")
+        & (df["bottleneck"] == False)
         & (df["strict"] == True)
     ].idx.tolist()
 
@@ -117,9 +129,9 @@ def kw(
     k_scores_path = data_folder / f"kw/k_{metric_type}.pickle"
 
     if not os.path.isfile(k_scores_path):
-        for strict, ids in enumerate([nonstrict_ids, strict_ids]):
+        for nonstrict, ids in enumerate([strict_ids, nonstrict_ids]):
             for idx in tqdm(ids):
-                with open(data_folder / f"kw/out/{idx}.json") as f:
+                with open(data_folder / f"kw/out/{int(idx)}.json") as f:
                     x = json.load(f)
                     ys = np.array(x["ys"])
                     yhats = np.array(x["yhats"])
@@ -130,11 +142,11 @@ def kw(
 
                         score = score_fn(ys, yhats, k=k)
 
-                        if strict == 0:
+                        if nonstrict == 1:
                             scores["nonstrict"][k].append(score)
-                        elif strict == 1:
+                        elif nonstrict == 0:
                             scores["strict"][k].append(score)
-                            score_rand = score_fn(ys, yrand, k)
+                            score_rand = score_fn(ys, yrand, k=k)
                             scores["rand"][k].append(score_rand)
 
         with open(k_scores_path, "wb") as f:
@@ -159,12 +171,12 @@ def kw(
             ls = ":"
             lw = 3
             zorder = 10
-            colour = colours[0]
+            colour = colours[1]
         elif score_type == "nonstrict":
             ls = "solid"
             lw = 2
             zorder = 0
-            colour = colours[1]
+            colour = colours[0]
         elif score_type == "rand":
             ls = "--"
             lw = 2
@@ -186,6 +198,9 @@ def kw(
     plt.xlim(8.38, 1086)
 
     plt.savefig(output_folder / f"figures/{filename}.svg")
+
+    #reset metric type for second figure
+    metric_type = 'ndcg'
 
     categories = [
         "Ligand.",
@@ -211,7 +226,7 @@ def kw(
 
     for strict, ids in enumerate([nonstrict_ids, strict_ids]):
         for idx in tqdm(ids):
-            with open(data_folder / f"kw/out/{idx}.json") as f:
+            with open(data_folder / f"kw/out/{int(idx)}.json") as f:
                 x = json.load(f)
                 ys = np.array(x["ys"])
                 yhats = np.array(x["yhats"])
@@ -290,25 +305,26 @@ def kw(
     labels = [label[:-1] for label in labels]
     labels = np.array(labels)[order_idx]
 
-    means = {
-        "Strict": (strict_means, scores["strict"]),
-        "Non-Strict": (nonstrict_means, scores["nonstrict"]),
-        "Random": (rand_means, scores["rand"]),
-    }
-
     xs = np.arange(len(labels))  # the label locations
     width = 0.25  # the width of the bars
     multiplier = 0
 
-    for c_idx, (attribute, (measurement, points)) in enumerate(means.items()):
+    for c_idx, (attribute, (measurement, points)) in enumerate([
+        ("Strict", (strict_means, scores["strict"])),
+        ("Non-Strict", (nonstrict_means, scores["nonstrict"])),
+        ("Random", (rand_means, scores["rand"])),
+    ]):
         offset = width * multiplier
 
-        if c_idx == 0:
-            hatch = None
-        elif c_idx == 1:
+        if c_idx == 1:
             hatch = "//"
+            colour = colours[0]
+        elif c_idx == 0:
+            hatch = None
+            colour = colours[1]
         elif c_idx == 2:
             hatch = "."
+            colour = colours[2]
 
         measurement = np.array(measurement)[order_idx]
 
@@ -317,7 +333,7 @@ def kw(
             measurement,
             width,
             label=attribute,
-            color=colours[c_idx],
+            color=colour,
             hatch=hatch,
             edgecolor="k",
             lw=1,
