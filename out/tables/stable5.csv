@@ -1,0 +1,6 @@
+Encoder,% Change MCC,% Change AUROC,% Change AP,% Change F1,% Change Accuracy
+ProteinBERT,-0.00553,-0.00355,-0.00397,-0.00114,-0.00196
+ProtBERT,-0.0072,-0.00213,-0.00234,-0.00042,-0.00263
+ProtT5-XL,-0.013,-0.00517,0.000316,-0.00878,-0.0046
+SqueezeProt-SP (Non-strict),-0.0727,-0.026,-0.0326,-0.00311,-0.018
+SqueezeProt-SP (Strict),0.0651,0.00838,0.00824,0.0184,0.0159
