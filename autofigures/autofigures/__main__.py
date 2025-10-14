@@ -30,7 +30,9 @@ from autofigures import (
     mutation,
     kw,
     degree_correlation,
-    prefix_random
+    prefix_random,
+    ppi_seq_id,
+    all_stables
 )
 
 if __name__ == "__main__":
@@ -49,6 +51,8 @@ if __name__ == "__main__":
             "acc_by_length": acc_by_length,
             "concordance2": concordance2,
             "degree_correlation": degree_correlation,
-            "prefix_random": prefix_random
+            "prefix_random": prefix_random,
+            "ppi_seq_id": ppi_seq_id,
+            "all_stables": all_stables
         }
     )

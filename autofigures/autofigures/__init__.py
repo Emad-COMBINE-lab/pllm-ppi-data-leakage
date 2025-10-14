@@ -29,48 +29,61 @@ from autofigures.mutation import mutation
 from autofigures.kw import kw
 from autofigures.degree_correlation import degree_correlation
 from autofigures.prefix_random import prefix_random
-
+from autofigures.ppi_seq_id import ppi_seq_id
+from autofigures.stables import all_stables
 
 def run_all(
     output_folder: Optional[Union[Path, str]] = None,
     data_folder: Optional[Union[Path, str]] = None,
 ):
-    print("[START] GET_SCORES")
+    print("GET_SCORES")
     get_scores(output_folder, data_folder)
-    print("[DONE] GET_SCORES")
+    print("\tDONE")
 
-    print("[START] SPEED")
+    print("SPEED")
     speed(output_folder, data_folder)
-    print("[DONE] SPEED")
+    print("\tDONE")
 
-    print("[START] STRICT_NONSTRICT")
+    print("STRICT_NONSTRICT")
     strict_nonstrict(output_folder, data_folder)
-    print("[DONE] STRICT_NONSTRICT")
+    print("\tDONE")
 
-    print("[START] KW")
+    print("PPI_SEQ_ID")
+    ppi_seq_id(output_folder, data_folder)
+    print("\tDONE")
+
+    print("KW")
     kw(output_folder, data_folder)
-    print("[DONE] KW")
+    print("\tDONE")
 
-    print("[START] CONCORDANCE")
+    print("CONCORDANCE SNC")
     concordance(output_folder, data_folder)
-    print("[DONE] CONCORDANCE")
+    print("\tDONE")
 
-    print("[START] ACC_BY_LENGTH")
+    print("CONCORDANCE KAPPA")
+    concordance(output_folder, data_folder, cohen_kappa=True)
+    print("\tDONE")
+
+    print("DEGREE_CORRELATION")
+    degree_correlation(output_folder, data_folder)
+    print("\tDONE")
+
+    print("ACC_BY_LENGTH")
     acc_by_length(output_folder, data_folder)
-    print("[DONE] ACC_BY_LENGTH")
+    print("\tDONE")
 
-    print("[START] LENGTH_HISTOGRAM")
+    print("LENGTH_HISTOGRAM")
     length_histogram(output_folder, data_folder)
-    print("[DONE] LENGTH_HISTOGRAM")
+    print("\tDONE")
 
-    print("[START] LENGTH_HEATMAP")
+    print("LENGTH_HEATMAP")
     length_heatmap(output_folder, data_folder)
-    print("[DONE] LENGTH_HEATMAP")
+    print("\tDONE")
 
-    print("[START] SARS_COV2")
+    print("SARS_COV2")
     sars_cov2(output_folder, data_folder)
-    print("[DONE] SARS_COV2")
+    print("\tDONE")
 
-    print("[START] MUTATION")
+    print("MUTATION")
     mutation(output_folder, data_folder)
-    print("[DONE] MUTATION")
+    print("\tMUTATION")
