@@ -69,7 +69,7 @@ def strict_nonstrict(
             )
 
     metric_names = [first_metric, second_metric]
-    titles = ["C)", "D)"]
+    titles = ["a", "b"]
     width = 0.6
 
     print("====[ STAT TESTS ]====")
@@ -85,6 +85,7 @@ def strict_nonstrict(
     for metric in ["auroc", "mcc", "ap", "f1"]:
         strict_metrics = metrics["strict"][metric]
         nonstrict_metrics = metrics["nonstrict"][metric]
+
         w_result = stats.wilcoxon(strict_metrics, nonstrict_metrics, alternative='less')
         print(f"\t\t[{metric}] {w_result.statistic}, p-value: {w_result.pvalue}")
 
