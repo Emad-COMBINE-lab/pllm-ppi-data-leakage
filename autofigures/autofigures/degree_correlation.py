@@ -32,7 +32,7 @@ from palettable.cubehelix import get_map
 from matplotlib.colors import LogNorm
 from matplotlib.ticker import FuncFormatter
 
-MODELS = ["esm", "prose", "proteinbert", "prottrans_bert", "prottrans_t5", "squeezeprot_u50", "squeezeprot_sp_strict", "squeezeprot_sp_nonstrict"]
+MODELS = ["esm", "prose", "proteinbert", "prottrans_bert", "prottrans_t5", "squeezeprot_u50", "squeezeprot_sp_strict", "squeezeprot_sp_nonstrict", "dscript"]
 STRICT_INDEX = MODELS.index("squeezeprot_sp_strict")
 NONSTRICT_INDEX = MODELS.index("squeezeprot_sp_nonstrict")
 
@@ -87,11 +87,11 @@ def count_dataset_proteins(
 
     return positives_dict, negatives_dict
 
-
 def count_result_proteins(
     ppi_path: Union[Path, str],
     model_name: str,
-    output_folder: Union[Path, str]
+    output_folder: Union[Path, str],
+    data_folder: Union[Path, str]
 ):
     c_type = 3
     split = 'test'
@@ -101,38 +101,35 @@ def count_result_proteins(
     positives_dict = defaultdict(lambda: 0)
     negatives_dict = defaultdict(lambda: 0)
 
-    for seed in [1,2,3]:
-
-        seed_path = output_folder / f"tables/scores_s{seed}.csv"
+    if model_name == "dscript":
+        seed_path = data_folder / f"results/traditional/dscript_9606x9606.eval.test.predictions.tsv"
+        seed_df = pd.read_csv(seed_path, delimiter='\t', names=['p1', 'p2', 'y_true', 'y_hat'])
+    else:
+        seed_path = output_folder / f"tables/scores_s1.csv"
         seed_df = pd.read_csv(seed_path)
+        seed_df = seed_df[seed_df.model_name == model_name]
 
-        y_hats = []
 
-        for row_idx, row in seed_df[seed_df.model_name == model_name].iterrows():
-            y_hats.append(row.y_hat)
+    y_hats = []
 
-        #assert len(y_hats) == len(dataset)
+    for row_idx, row in seed_df.iterrows():
+        y_hats.append(row.y_hat)
 
-        for i, y_hat in zip(range(len(dataset)), y_hats):
-            p1, p2, label = dataset[i]
+    for i, y_hat in zip(range(len(dataset)), y_hats):
+        p1, p2, label = dataset[i]
 
-            if y_hat > 0.5:
-                positives_dict[p1] += 1
-                positives_dict[p2] += 1
-            else:
-                negatives_dict[p1] += 1
-                negatives_dict[p2] += 1
-
-    for key in positives_dict.keys():
-        positives_dict[key] = round(positives_dict[key] / 3)
-
-    for key in negatives_dict.keys():
-        negatives_dict[key] = round(negatives_dict[key] / 3)
+        if y_hat > 0.5:
+            positives_dict[p1] += 1
+            positives_dict[p2] += 1
+        else:
+            negatives_dict[p1] += 1
+            negatives_dict[p2] += 1
 
     return positives_dict, negatives_dict
 
 def compute_count_matrix(
     output_folder: Union[Path, str],
+    data_folder: Union[Path, str],
     ppi_path: Union[Path, str],
     expected_cache_path: Union[Path, str], 
     observed_cache_path: Union[Path, str]
@@ -151,7 +148,8 @@ def compute_count_matrix(
         model_positives_dicts[model_name], model_negatives_dict[model_name] = count_result_proteins(
             ppi_path,
             model_name,
-            output_folder
+            output_folder,
+            data_folder
         )
 
     expected_counts = np.empty((len(proteins), len(MODELS)))
@@ -198,7 +196,7 @@ def degree_correlation(
     observed_cache_path = output_folder / "tables/observed_positive_protein_counts.pkl.gz"
 
     if not os.path.isfile(expected_cache_path) or not os.path.isfile(observed_cache_path):
-        expected_counts, observed_counts = compute_count_matrix(output_folder, ppi_path, expected_cache_path, observed_cache_path)
+        expected_counts, observed_counts = compute_count_matrix(output_folder, data_folder, ppi_path, expected_cache_path, observed_cache_path)
     else:
         print("Reading cache...")
         with gzip.open(expected_cache_path, 'rb') as f:
@@ -475,7 +473,7 @@ def degree_correlation(
         ax.barh(
             ls[i],
             mean,
-            height=0.25,
+            height=0.4,
             color=colours[colour_idx[i]],
             edgecolor="k",
             lw=1,
