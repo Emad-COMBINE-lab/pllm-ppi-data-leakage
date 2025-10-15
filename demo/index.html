@@ -794,7 +794,8 @@
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Emad-COMBINE-lab/pllm-ppi-data-leakage.git
 <span class="nb">cd</span><span class="w"> </span>pllm-ppi-data-leakage
 </code></pre></div>
-<p>Next, after having to download the compressed data archive from <a href="https://drive.proton.me/urls/XP0QHQ51AM#d9HEKqgnvfEf">this mirror</a>. Note: the download is &gt;16GiB, which will take some time to download.</p>
+<p>Next, download and decompress the data archive from <a href="https://doi.org/10.5281/zenodo.17353962">Zenodo</a>. The file is a tar archive compressed with Zstandard. The <code>README.md</code> file in the data folder contains some alternative ways to download the data.</p>
+<p>Note: the compressed download is &gt;14.5GiB, which will take some time to download and decompress to 44.5GiB.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>data
 <span class="c1"># download the data.tar.zstd file here</span>
 tar<span class="w"> </span>-I<span class="w"> </span>zstd<span class="w"> </span>-xvf<span class="w"> </span>data.tar.zstd
