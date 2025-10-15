@@ -20,7 +20,7 @@
     
     
       
-        <title>Usage - A flaw in using pre-trained pLLMs in protein-protein interaction inference models</title>
+        <title>Usage - A flaw in using pre-trained pLMs in protein-protein interaction inference models</title>
       
     
     
@@ -86,7 +86,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" class="md-header__button md-logo" aria-label="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" data-md-component="logo">
+    <a href="../.." title="A flaw in using pre-trained pLMs in protein-protein interaction inference models" class="md-header__button md-logo" aria-label="A flaw in using pre-trained pLMs in protein-protein interaction inference models" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -100,7 +100,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            A flaw in using pre-trained pLLMs in protein-protein interaction inference models
+            A flaw in using pre-trained pLMs in protein-protein interaction inference models
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -307,13 +307,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" class="md-nav__button md-logo" aria-label="A flaw in using pre-trained pLLMs in protein-protein interaction inference models" data-md-component="logo">
+    <a href="../.." title="A flaw in using pre-trained pLMs in protein-protein interaction inference models" class="md-nav__button md-logo" aria-label="A flaw in using pre-trained pLMs in protein-protein interaction inference models" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    A flaw in using pre-trained pLLMs in protein-protein interaction inference models
+    A flaw in using pre-trained pLMs in protein-protein interaction inference models
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1493,11 +1493,11 @@
 <tbody>
 <tr>
 <td><a href="#get_scores">get_scores</a></td>
-<td>Infer and score pLLM-based PPI models. Pre-requisite for some commands.</td>
+<td>Infer and score pLM-based PPI models. Pre-requisite for some commands.</td>
 </tr>
 <tr>
 <td><a href="#speed">speed</a></td>
-<td>Make figure 1a, which compares the speed and PPI classification performance of SoTA pLLMs and SqueezeProt.</td>
+<td>Make figure 1a, which compares the speed and PPI classification performance of SoTA pLMs and SqueezeProt.</td>
 </tr>
 <tr>
 <td><a href="#strict_nonstrict">strict_nonstrict</a></td>
@@ -1509,7 +1509,7 @@
 </tr>
 <tr>
 <td><a href="#concordance">concordance</a></td>
-<td>Make figure 1g-h, which reports the concordance between pLLM methods and SqueezeProt-SP variants.</td>
+<td>Make figure 1g-h, which reports the concordance between pLM methods and SqueezeProt-SP variants.</td>
 </tr>
 <tr>
 <td><a href="#length_histogram">length_histogram</a></td>
@@ -1517,15 +1517,15 @@
 </tr>
 <tr>
 <td><a href="#length_heatmap">length_heatmap</a></td>
-<td>Make figure 2b, which shows the performance of pLLM-base PPIs as a function of the length of the proteins in the pair.</td>
+<td>Make figure 2b, which shows the performance of pLM-base PPIs as a function of the length of the proteins in the pair.</td>
 </tr>
 <tr>
 <td><a href="#acc_by_length">acc_by_length</a></td>
-<td>Make figure 2c, which shows the performance of pLLM-base PPIs as a function of the longest protein in the pair.</td>
+<td>Make figure 2c, which shows the performance of pLM-base PPIs as a function of the longest protein in the pair.</td>
 </tr>
 <tr>
 <td><a href="#sars_cov2">sars_cov2</a></td>
-<td>Make figure 2e, which reports AUROC curves of pLLM-based PPI methods tested on both Human PPIs and Human-SARS-CoV-2 PPIs.</td>
+<td>Make figure 2e, which reports AUROC curves of pLM-based PPI methods tested on both Human PPIs and Human-SARS-CoV-2 PPIs.</td>
 </tr>
 <tr>
 <td><a href="#mutation">mutation</a></td>
@@ -1557,12 +1557,12 @@ FLAGS
 <h3 id="description">Description</h3>
 <p>The get_scores command:</p>
 <ol>
-<li>Loads already-trained pLLM-based PPI models.</li>
+<li>Loads already-trained pLM-based PPI models.</li>
 <li>Infer interaction probabilities of the C3 PPI testing dataset using the loaded PPI models.</li>
 <li>Score the inferred probabilities using <a href="https://en.wikipedia.org/wiki/Phi_coefficient">MCC</a> and <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">AUROC</a>.</li>
 </ol>
 <p>This command does not generate a figure, but running it a pre-requisite for other commands.</p>
-<p>The checkpoints for the pLLM-based PPI models are stored in the data folder (<code>data/chkpts</code>), and were generated by the ppi_bench experiment.</p>
+<p>The checkpoints for the pLM-based PPI models are stored in the data folder (<code>data/chkpts</code>), and were generated by the ppi_bench experiment.</p>
 <p>get_scores also needs pre-computed embeddings for <a class="mkdocs-ezglossary-link"
     id="a7359539c27837c8906ab212af07e0a8"
     title=""
@@ -1641,7 +1641,7 @@ FLAGS
         Default: &#39;mcc&#39;
 </code></pre></div>
 <h3 id="description_1">Description</h3>
-<p>Make figure 1a, which compares the speed and PPI classification performance of SoTA pLLMs and SqueezeProt.</p>
+<p>Make figure 1a, which compares the speed and PPI classification performance of SoTA pLMs and SqueezeProt.</p>
 <p>This command will save the plot to disk as <code>figures/speed.sv</code> in the output directory.</p>
 <h3 id="flags_1">Flags</h3>
 <table>
@@ -1815,7 +1815,7 @@ FLAGS
         Default: False
 </code></pre></div>
 <h3 id="description_4">Description</h3>
-<p>Make figure 1g-h, which reports the concordance between pLLM methods and SqueezeProt-SP variants.</p>
+<p>Make figure 1g-h, which reports the concordance between pLM methods and SqueezeProt-SP variants.</p>
 <p>Once it has run, it will save the plot as <code>figure/concordance.svg</code> in the output directory.</p>
 <h3 id="flags_4">Flags</h3>
 <table>
@@ -1963,7 +1963,7 @@ FLAGS
         Default: False
 </code></pre></div>
 <h3 id="description_7">Description</h3>
-<p>Make figure 2c, which shows the performance of pLLM-base PPIs as a function of the longest protein in the pair.</p>
+<p>Make figure 2c, which shows the performance of pLM-base PPIs as a function of the longest protein in the pair.</p>
 <p>Once it has run, it will save the plot as <code>figure/acc_by_length.svg</code> in the output directory.</p>
 <h3 id="flags_7">Flags</h3>
 <table>
@@ -2008,7 +2008,7 @@ FLAGS
         Default: None
 </code></pre></div>
 <h3 id="description_8">Description</h3>
-<p>Make figure 2e, which reports AUROC curves of pLLM-based PPI methods tested on both Human PPIs and Human-SARS-CoV-2 PPIs.</p>
+<p>Make figure 2e, which reports AUROC curves of pLM-based PPI methods tested on both Human PPIs and Human-SARS-CoV-2 PPIs.</p>
 <p>Once it has run, it will save the plot the following plots in the output directory:</p>
 <ul>
 <li><code>figures/sars_cov2_breakdown.svg</code></li>
