@@ -11,7 +11,9 @@ git clone https://github.com/Emad-COMBINE-lab/pllm-ppi-data-leakage.git
 cd pllm-ppi-data-leakage
 ```
 
-Next, after having to download the compressed data archive from [this mirror](https://drive.proton.me/urls/XP0QHQ51AM#d9HEKqgnvfEf). Note: the download is >16GiB, which will take some time to download.
+Next, download and decompress the data archive from [Zenodo](https://doi.org/10.5281/zenodo.17353962). The file is a tar archive compressed with Zstandard. The `README.md` file in the data folder contains some alternative ways to download the data.
+
+Note: the compressed download is >14.5GiB, which will take some time to download and decompress to 44.5GiB.
 
 ```bash
 cd data

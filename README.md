@@ -12,7 +12,7 @@ Please consult the [documentation](https://Emad-COMBINE-lab.github.io/pllm-ppi-d
 
 ## Where's the Data?
 
-There are 16GiB of compressed data which is too large for Git to reasonably handle. Data files can be downloaded via the HTTP and BitTorrent protocol. More information is available in the [data](data/README.md) folder.
+There are 14.5GiB of compressed data which is too large for Git to reasonably handle. Data files can be downloaded via the HTTP and BitTorrent protocols. More information is available in the [data](data/README.md) folder.
 
 ## Installation & Requirements
 
