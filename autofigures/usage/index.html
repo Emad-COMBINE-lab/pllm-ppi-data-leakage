@@ -1534,8 +1534,9 @@
 </tbody>
 </table>
 <p>You can see how to regenerate all panels from scratch using the diagrams below. Blue squares are experiments that need to be run, red squares are autofigures commands, and the yellow circle indicate commands that generate the figures. The order of the squares also indicates .</p>
-<p><img alt="autofigures 1" src="../autofigures_1.svg" /></p>
-<p><img alt="autofigures 2" src="../autofigures_2.svg" /></p>
+<p><a href="../autofigures_1.png"><img alt="autofigures 1" src="../autofigures_1.thumb.png" /></a></p>
+<p><a href="../autofigures_2.png"><img alt="autofigures 2" src="../autofigures_2.thumb.png" /></a></p>
+<p><a href="../autofigures_3.png"><img alt="autofigures 3" src="../autofigures_3.thumb.png" /></a></p>
 <h2 id="output-and-data-folders">Output and Data Folders</h2>
 <p>Common among these sub-commands are two flags: <strong>output_folder</strong> and <strong>data_folder</strong>. The former is where the results of the sub-commands are saved, and the latter is where the data used to run the sub-commands is kept. These default to "out" and "data" in the root directory if not specified.</p>
 <h2 id="get_scores">get_scores</h2>
@@ -1757,6 +1758,9 @@ FLAGS
     -d, --data_folder=DATA_FOLDER
         Type: Optional[Union]
         Default: None
+    -m, --metric_type=METRIC_TYPE
+        Type: str
+        Default: &#39;ndcg&#39;
 </code></pre></div>
 <h3 id="description_3">Description</h3>
 <p>Make figure 1e-f, which reports the performance of strict and non-strict variants of SqueezeProt-SP on a UniProt Keyword annotation task.</p>
@@ -1783,6 +1787,12 @@ FLAGS
 <td>-d</td>
 <td>None</td>
 <td>Location of the <a href="output-and-data-folders">data folders</a>.</td>
+</tr>
+<tr>
+<td>--metric_type</td>
+<td>-m</td>
+<td>'ndcg'</td>
+<td>Metric to report. Default is normalized discounted cumulative gain.</td>
 </tr>
 </tbody>
 </table>
@@ -1948,6 +1958,9 @@ FLAGS
     -d, --data_folder=DATA_FOLDER
         Type: Optional[Union]
         Default: None
+    -r, --random_window=RANDOM_WINDOW
+        Type: bool
+        Default: False
 </code></pre></div>
 <h3 id="description_7">Description</h3>
 <p>Make figure 2c, which shows the performance of pLLM-base PPIs as a function of the longest protein in the pair.</p>
@@ -1971,6 +1984,11 @@ FLAGS
 <td>--data_folder</td>
 <td>-d</td>
 <td>Location of the <a href="output-and-data-folders">data folders</a>.</td>
+</tr>
+<tr>
+<td>--random_window</td>
+<td>-r</td>
+<td>Use random window PPI models.</td>
 </tr>
 </tbody>
 </table>
