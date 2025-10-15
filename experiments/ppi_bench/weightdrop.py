@@ -1,4 +1,4 @@
-# Code for "A flaw in using pre-trained pLLMs in protein-protein interaction inference models"
+# Code for "A flaw in using pre-trained pLMs in protein-protein interaction inference models"
 #
 # Copyright (C) 2025 Joseph Szymborski
 #

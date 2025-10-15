@@ -1,6 +1,6 @@
 # speed_bench
 
-This folder contains the scripts required to measure the speed of the various pLLMs.
+This folder contains the scripts required to measure the speed of the various pLMs.
 
 ## Measuring Speed
 

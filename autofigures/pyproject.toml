@@ -1,7 +1,7 @@
 [project]
 name = "autofigures"
 version = "0.1.0"
-description = "Programme which generates all the figures and some analyses for 'A serious flaw in the design of pLLM-based protein-protein interaction models'."
+description = "Programme which generates all the figures and some analyses for 'A serious flaw in the design of pLM-based protein-protein interaction models'."
 authors = [{ name = "Joseph Szymborski", email = "joseph.szymborski@mail.mcgill.ca" }]
 requires-python = "~=3.10"
 readme = "README.md"
@@ -25,7 +25,7 @@ dependencies = [
 [tool.poetry]
 name = "autofigures"
 version = "0.1.0"
-description = "Programme which generates all the figures and some analyses for 'A serious flaw in the design of pLLM-based protein-protein interaction models'."
+description = "Programme which generates all the figures and some analyses for 'A serious flaw in the design of pLM-based protein-protein interaction models'."
 authors = ["Joseph Szymborski <joseph.szymborski@mail.mcgill.ca>"]
 readme = "README.md"
 

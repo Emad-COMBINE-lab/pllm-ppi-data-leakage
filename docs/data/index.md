@@ -9,7 +9,7 @@ The data folder contains data files used in the manuscript. It is subdivided int
 | [kw](#kw)| Where protein embedding databases are stored. |
 | [lengths](#lengths)| Where data for the length analysis. |
 | [mutation](#mutation)| Where data for the mutation analysis. |
-| [pllm](#pllm)              | Where PPI datasets are stored.     |
+| [pllm](#pllm)              | Where pLM datasets are stored.     |
 | [ppi](#ppi)              | Where PPI datasets are stored.     |
 | [tokenizer](#tokenizer)  | Where tokenizers are stored.        |
 
@@ -23,18 +23,18 @@ This folder contains model checkpoints for the SqueezeProt variants,  <term:RAPP
 |`squeezeprot-sp.non-strict/checkpoint-1390896`|Weights for <term:SqueezeProt-SP (Non-strict)>.|
 |`squeezeprot-sp.strict/checkpoint-1383824`|Weights for <term:SqueezeProt-SP (Strict)>.|
 |`squeezeprot-sp.u50/checkpoint-2477920`|Weights for <term:SqueezeProt-U50>.|
-|`sars_cov2`|Various weights for pLLM-based PPI models used in the SARS-CoV-2 analysis.|
+|`sars_cov2`|Various weights for pLM-based PPI models used in the SARS-CoV-2 analysis.|
 |`rapppid/1690837077.519848_red-dreamy.ckpt`|Weights for <term:RAPPPID>. These weights were previously published in [Szymborski _et al._](https://doi.org/10.1093/bioinformatics/btac429).|
 |`prose/prose_dlm_3x1024.sav`|Weights for <term:ProSE>. These weights were previously published in [Bepler _et al._](https://doi.org/10.1016/j.cels.2021.05.017).|
-|`ppi`|Various weights for pLLM-based PPI models.|
+|`ppi`|Various weights for pLM-based PPI models.|
 |`kw/logs/KeywordNet`|SqueezeProt-SP keyword annotation models.|
 
 
-This folder also contains sub-folders `ppi`, `sars_cov2` where checkpoints of the pLLM-based PPI inference models are stored. Checkpoints are stored according to their model names, which are hashes of the model hyperparameters. You can see all the hyper-parameters in the `hparams.json` file within the model's folder.
+This folder also contains sub-folders `ppi`, `sars_cov2` where checkpoints of the pLM-based PPI inference models are stored. Checkpoints are stored according to their model names, which are hashes of the model hyperparameters. You can see all the hyper-parameters in the `hparams.json` file within the model's folder.
 
 ??? info "Mappings from Model IDs to their Hyperparameters"
 
-    | Model ID                     | pLLM     | Seed | Input Dimension|
+    | Model ID                     | pLM     | Seed | Input Dimension|
     |------------------------------|----------|------|----------------|
     |`iRcKUvufAzeh9CuJAtFMgjRq8Yo=`|<term:ESM>|1     |6165            |
     |`aLK3NQAPP9uHfEDhrBCaFXTjE9I=`|<term:ESM>|2     |6165            |
@@ -80,7 +80,7 @@ This folder also contains sub-folders `ppi`, `sars_cov2` where checkpoints of th
 
 This folder holds pre-computed UniProt protein embeddings for each model. Embeddings are stored in [LMDB databases](https://lmdb.readthedocs.io/en/release/).
 
-| Database | pLLM |
+| Database | pLM |
 |----------|------|
 |`esm.lmdb`  |<term:ESM> |
 |`prose.lmdb`|<term:ProSE>|
@@ -124,7 +124,7 @@ This folder contains data for the mutation analyses.
 |`elaspic-trainin-set-interface-ids.csv`|Data from the [ELASPIC2 manuscript](https://doi.org/10.1016/j.jmb.2021.166810).|
 
 ## pllm
-This folder contains data used to train the SqueezeProt-SP pLLMs.
+This folder contains data used to train the SqueezeProt-SP pLMs.
 
 | Folder | Description |
 |--------|-------------|

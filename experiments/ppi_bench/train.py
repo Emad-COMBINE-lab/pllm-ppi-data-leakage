@@ -1,4 +1,4 @@
-# Code for "A flaw in using pre-trained pLLMs in protein-protein interaction inference models"
+# Code for "A flaw in using pre-trained pLMs in protein-protein interaction inference models"
 #
 # Copyright (C) 2025 Joseph Szymborski
 #
@@ -29,6 +29,7 @@ import pandas as pd
 from base64 import urlsafe_b64encode
 from hashlib import sha1
 from lightning.pytorch import seed_everything
+from os import makedirs
 
 
 def train(
@@ -144,6 +145,11 @@ def main(
     }
 
     model_name = hash_dict(payload)
+
+    makedirs(f"../../data/chkpts/ppi/{model_name}", exist_ok=True)
+
+    with gzip.open(f"../../data/chkpts/ppi/{model_name}/hparams.json.gz", "wt") as f:
+        json.dump(payload, f, indent=4)
 
     dict_logger, num_params = train(
         model_name,

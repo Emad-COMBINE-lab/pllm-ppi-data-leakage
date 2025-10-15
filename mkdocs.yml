@@ -1,4 +1,4 @@
-site_name: A flaw in using pre-trained pLLMs in protein-protein interaction inference models
+site_name: A flaw in using pre-trained pLMs in protein-protein interaction inference models
 #site_url: https://mydomain.org/mysite
 theme:
   name: material

@@ -40,7 +40,7 @@ python bench.py infer MODEL_NAME CHECKPOINT_PATH <flags>
 |Argument  |Description                                   |
 |----------|----------------------------------------------|
 |MODEL_NAME|Name of the LLM to use to infer the PPIs.     |
-|CHECKPOINT_PATH|Path to the pLLM-based PPI inference model checkpoint. |
+|CHECKPOINT_PATH|Path to the pLM-based PPI inference model checkpoint. |
 
 
 |Short Flag|Long Flag   |Default |Description |

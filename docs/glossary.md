@@ -2,7 +2,7 @@
 
 ## Definitions
 
-### pLLMs
+### pLMs
 
 term:ESM
 :   Evolutionary Scale Modeling (ESM) is a protein large language model
@@ -34,10 +34,10 @@ term:SqueezeProt-SP (Non-strict)
 term:SqueezeProt-U50
 :   SqueezeProt-U50 is a novel protein large language model introduced in this manuscript. It is trained on a non-strict UniRef50 dataset which includes proteins from the downstream PPI testing dataset. See the manuscript for more details. It is referred to as `squeezeprot_u50` by the code for the manuscript.
 
-### Non-pLLM-based PPI Inference Methods
+### Non-pLM-based PPI Inference Methods
 
 term:RAPPPID
-:   RAPPPID is a non-pLLM-based PPI inference method described in [Szymborski _et al._](https://doi.org/10.1093/bioinformatics/btac429) and is based on an AWD-LSTM regularized neural network.
+:   RAPPPID is a non-pLM-based PPI inference method described in [Szymborski _et al._](https://doi.org/10.1093/bioinformatics/btac429) and is based on an AWD-LSTM regularized neural network.
 
 ## Glossary
 

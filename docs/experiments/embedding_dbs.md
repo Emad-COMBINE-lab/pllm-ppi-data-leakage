@@ -16,9 +16,9 @@ python embed_batch.py PLLM INPUT_PATH MAX_BATCH_SIZE DEVICE OUTPUT
 ### Arguments
 
 #### PLLM
-Specify the pLLM to use to embed protein sequences. The valid options are:
+Specify the pLM to use to embed protein sequences. The valid options are:
 
-| Command                    | pLLM                               |
+| Command                    | pLM                               |
 |----------------------------|------------------------------------|
 | `squeezeprot_sp_nonstrict` | <term:SqueezeProt-SP (Non-strict)> |
 | `squeezeprot_sp_strict`    | <term:SqueezeProt-SP (Strict)>     |
@@ -62,9 +62,9 @@ Either "cpu" or "cuda" depending on whether sequences are to be embedded on the 
 
 #### OUTPUT
 
-Path to save the embeddings database to. The default paths change with the pLLMs you specify:
+Path to save the embeddings database to. The default paths change with the pLMs you specify:
 
-| pLLM                               |Path |
+| pLM                               |Path |
 |------------------------------------|-----------------------------------------------------|
 | <term:SqueezeProt-SP (Non-strict)> |`../../data/embeddings/squeezeprot_sp_nonstrict.lmdb`|
 | <term:SqueezeProt-SP (Strict)>     |`../../data/embeddings/squeezeprot_sp_strict.lmdb`   |
